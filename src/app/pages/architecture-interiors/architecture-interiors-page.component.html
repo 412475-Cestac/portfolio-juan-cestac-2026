@@ -1,0 +1,15 @@
+<section class="px-0 py-12 sm:py-16 lg:py-20">
+  <div class="mx-auto max-w-screen-2xl">
+    <header class="mb-12 max-w-3xl sm:mb-16">
+      <p class="text-xs font-medium uppercase tracking-[0.35em] text-stone-500">Spaces and light</p>
+      <h1 class="mt-4 text-5xl font-semibold tracking-tight text-gray-950 sm:text-6xl lg:text-7xl">Architecture & Interiors</h1>
+      <p class="mt-5 max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
+        Architecture and interior photography focused on spaces, light and composition.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12">
+      <app-group-card *ngFor="let group of groups; let index = index" [group]="group" [featured]="index === 0"></app-group-card>
+    </div>
+  </div>
+</section>

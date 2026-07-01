@@ -1,0 +1,17 @@
+<section class="relative overflow-hidden rounded-[2rem] bg-[radial-gradient(circle_at_top_left,_#1f2937,_#030712_42%,_#020617)] px-4 py-16 text-white sm:px-6 lg:px-10 lg:py-24">
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_rgba(148,163,184,0.16),_transparent_34%)]"></div>
+
+  <div class="relative mx-auto max-w-screen-2xl">
+    <header class="mb-12 max-w-3xl sm:mb-16">
+      <p class="text-xs font-medium uppercase tracking-[0.35em] text-gray-400">Night Portfolio</p>
+      <h1 class="mt-4 text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">Shows & Night</h1>
+      <p class="mt-5 max-w-2xl text-base leading-relaxed text-gray-300 sm:text-lg">
+        Photography for live shows, nightlife, music events and night atmosphere.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12">
+      <app-group-card *ngFor="let group of groups; let index = index" [group]="group" [dark]="true" [featured]="index === 0"></app-group-card>
+    </div>
+  </div>
+</section>

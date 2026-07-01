@@ -1,0 +1,206 @@
+import { MediaGroup, MediaItem, MediaType, PortfolioGroup } from '../models/media.model';
+
+type MediaInput = Omit<MediaItem, 'type' | 'sectionSlug' | 'groupSlug'> & {
+  groupSlug?: string;
+  sectionSlug?: string;
+  type?: MediaType;
+};
+
+export function getMediaType(src: string): MediaType {
+  const extension = src.split('.').pop()?.toLowerCase();
+
+  if (['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif'].includes(extension ?? '')) {
+    return 'image';
+  }
+
+  if (['mp4', 'webm', 'mov'].includes(extension ?? '')) {
+    return 'video';
+  }
+
+  return 'image';
+}
+
+function slugify(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+const createMediaItem = (item: MediaInput): MediaItem => ({
+  ...item,
+  sectionSlug: item.sectionSlug ?? item.category,
+  groupSlug: item.groupSlug ?? slugify(item.subcategory ?? item.category),
+  type: item.type ?? getMediaType(item.src)
+});
+
+export const MEDIA_ITEMS: MediaItem[] = [
+  createMediaItem({ id: 'events-papagayo-01', title: 'Papagayo 01', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04831.jpg' }),
+  createMediaItem({ id: 'events-papagayo-02', title: 'Papagayo 02', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04817.jpg' }),
+  createMediaItem({ id: 'events-papagayo-03', title: 'Papagayo 03', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04803.jpg' }),
+  createMediaItem({ id: 'events-papagayo-04', title: 'Papagayo 04', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04779.jpg' }),
+  createMediaItem({ id: 'events-papagayo-05', title: 'Papagayo 05', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04765.jpg' }),
+  createMediaItem({ id: 'events-papagayo-06', title: 'Papagayo 06', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04727.jpg' }),
+  createMediaItem({ id: 'events-redbull-video-01', title: 'Redbull x La Fabrica', category: 'events', subcategory: 'Redbull x La Fabrica', src: 'assets/images/events/EVENTS/REDBULL X LA FABRICA/REDBULL X LA FABRICA.mp4' }),
+  createMediaItem({ id: 'events-mola-video-01', title: 'Mola Auto', category: 'events', subcategory: 'Mola', src: 'assets/images/events/EVENTS/MOLA/MOLA AUTO.mp4' }),
+  createMediaItem({ id: 'events-mola-video-02', title: 'Mola Casette', category: 'events', subcategory: 'Mola', src: 'assets/images/events/EVENTS/MOLA/MOLA CASETTE.mp4' }),
+  createMediaItem({ id: 'events-meed-video-01', title: 'B2B Session', category: 'events', subcategory: 'Meed x Session', src: 'assets/images/events/EVENTS/MEED X SESSION/B2B.mp4' }),
+
+  createMediaItem({ id: 'brands-caffuchinos-01', title: 'Caffuchinos 01', category: 'brands', subcategory: 'Caffuchinos', src: 'assets/images/brands/BRANDS/CAFFUCHINOS/DSC09354.jpg' }),
+  createMediaItem({ id: 'brands-caffuchinos-02', title: 'Caffuchinos 02', category: 'brands', subcategory: 'Caffuchinos', src: 'assets/images/brands/BRANDS/CAFFUCHINOS/DSC09342.jpg' }),
+  createMediaItem({ id: 'brands-caffuchinos-03', title: 'Caffuchinos 03', category: 'brands', subcategory: 'Caffuchinos', src: 'assets/images/brands/BRANDS/CAFFUCHINOS/DSC09337.jpg' }),
+  createMediaItem({ id: 'brands-caffuchinos-04', title: 'Caffuchinos 04', category: 'brands', subcategory: 'Caffuchinos', src: 'assets/images/brands/BRANDS/CAFFUCHINOS/DSC09301.jpg' }),
+  createMediaItem({ id: 'brands-paprika-01', title: 'Paprika 01', category: 'brands', subcategory: 'Paprika', src: 'assets/images/brands/BRANDS/PAPRIKA/DSC09127.jpg' }),
+  createMediaItem({ id: 'brands-paprika-02', title: 'Paprika 02', category: 'brands', subcategory: 'Paprika', src: 'assets/images/brands/BRANDS/PAPRIKA/DSC09060.jpg' }),
+  createMediaItem({ id: 'brands-paprika-03', title: 'Paprika 03', category: 'brands', subcategory: 'Paprika', src: 'assets/images/brands/BRANDS/PAPRIKA/DSC08116.jpg' }),
+  createMediaItem({ id: 'brands-mas-01', title: 'Mas Indumentaria 01', category: 'brands', subcategory: 'Mas Indumentaria', src: 'assets/images/brands/BRANDS/MAS INDUMENTARIA/DSC01938.jpg' }),
+  createMediaItem({ id: 'brands-mas-02', title: 'Mas Indumentaria 02', category: 'brands', subcategory: 'Mas Indumentaria', src: 'assets/images/brands/BRANDS/MAS INDUMENTARIA/DSC01826.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-01', title: 'Di Coccia 01', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05998.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-02', title: 'Di Coccia 02', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05923.jpg' }),
+  createMediaItem({ id: 'brands-mante-video-01', title: 'Mante 01', category: 'brands', subcategory: 'Mante', src: 'assets/images/brands/BRANDS/MANTE/MANTE 01.mp4' }),
+  createMediaItem({ id: 'brands-mante-video-02', title: 'Mante Preview', category: 'brands', subcategory: 'Mante', src: 'assets/images/brands/BRANDS/MANTE/MANTE PREVIEW 2.mp4' }),
+  createMediaItem({ id: 'brands-victory-video-01', title: 'Victory R1', category: 'brands', subcategory: 'Victory', src: 'assets/images/brands/BRANDS/VICTORY/VICTORY R1.mp4' }),
+  createMediaItem({ id: 'brands-victory-video-02', title: 'Victory R2', category: 'brands', subcategory: 'Victory', src: 'assets/images/brands/BRANDS/VICTORY/VICTORY R2.mp4' }),
+
+  createMediaItem({ id: 'shows-ysy-a-01', title: 'YSY A 01', category: 'shows-night', subcategory: 'YSY A', src: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC06122.jpg' }),
+  createMediaItem({ id: 'shows-ysy-a-02', title: 'YSY A 02', category: 'shows-night', subcategory: 'YSY A', src: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC06021.jpg' }),
+  createMediaItem({ id: 'shows-ysy-a-03', title: 'YSY A 03', category: 'shows-night', subcategory: 'YSY A', src: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC06002.jpg' }),
+  createMediaItem({ id: 'shows-ysy-a-04', title: 'YSY A 04', category: 'shows-night', subcategory: 'YSY A', src: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC05367.jpg' }),
+  createMediaItem({ id: 'shows-hernan-01', title: 'Hernan Cattaneo', category: 'shows-night', subcategory: 'Hernan Cattaneo', src: 'assets/images/shows-night/SHOWS . NIGHT/HERNAN CATTANEO/GO.jpg' }),
+  createMediaItem({ id: 'shows-hernan-video-01', title: 'Hernan Cattaneo 01', category: 'shows-night', subcategory: 'Hernan Cattaneo', src: 'assets/images/shows-night/SHOWS . NIGHT/HERNAN CATTANEO/1.mp4' }),
+  createMediaItem({ id: 'shows-hernan-video-02', title: 'Hernan Cattaneo 02', category: 'shows-night', subcategory: 'Hernan Cattaneo', src: 'assets/images/shows-night/SHOWS . NIGHT/HERNAN CATTANEO/2.mp4' }),
+  createMediaItem({ id: 'shows-amelie-video-01', title: 'Amelie Lens 01', category: 'shows-night', subcategory: 'Amelie Lens', src: 'assets/images/shows-night/SHOWS . NIGHT/AMELIE LENS/AMELIE DROP 2.mp4' }),
+  createMediaItem({ id: 'shows-argy-video-01', title: 'Argy 01', category: 'shows-night', subcategory: 'Argy', src: 'assets/images/shows-night/SHOWS . NIGHT/ARGY/ARGY 1.mp4' }),
+  createMediaItem({ id: 'shows-konstantin-video-01', title: 'Konstantin & Adam 01', category: 'shows-night', subcategory: 'Konstantin Sibold - Adam Sellouk', src: 'assets/images/shows-night/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/KONSTANTIN Y ADAM 1.mp4' }),
+  createMediaItem({ id: 'shows-mau-p-video-01', title: 'Mau P 01', category: 'shows-night', subcategory: 'Mau P', src: 'assets/images/shows-night/SHOWS . NIGHT/MAU P/MAUPAPI.mp4' }),
+  createMediaItem({ id: 'shows-rufus-video-01', title: 'Rufus Du Sol 01', category: 'shows-night', subcategory: 'Rufus Du Sol', src: 'assets/images/shows-night/SHOWS . NIGHT/RUFUS DU SOL/RUFUS 1.mp4' }),
+  createMediaItem({ id: 'shows-tobi-video-01', title: 'Boat Party 01', category: 'shows-night', subcategory: 'Tobi Amuchastegui Boat Party', src: 'assets/images/shows-night/SHOWS . NIGHT/TOBI AMUCHASTEGUI BOAT PARTY/02.mp4' }),
+
+  createMediaItem({ id: 'architecture-01', title: 'Architecture 01', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08890.jpg' }),
+  createMediaItem({ id: 'architecture-02', title: 'Architecture 02', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08834.jpg' }),
+  createMediaItem({ id: 'architecture-03', title: 'Architecture 03', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08823.jpg' }),
+  createMediaItem({ id: 'architecture-04', title: 'Architecture 04', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC04643.jpg' }),
+  createMediaItem({ id: 'architecture-05', title: 'Architecture 05', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC04549.jpg' }),
+  createMediaItem({ id: 'architecture-06', title: 'Architecture 06', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC03516.jpg' }),
+  createMediaItem({ id: 'architecture-07', title: 'Architecture 07', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC03459.jpg' }),
+  createMediaItem({ id: 'architecture-08', title: 'Architecture 08', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC02802.jpg' }),
+
+  createMediaItem({ id: 'events-papagayo-07', title: 'Papagayo 07', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC03778-Mejorado-NR.jpg' }),
+  createMediaItem({ id: 'events-papagayo-08', title: 'Papagayo 08', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC03752-Mejorado-NR.jpg' }),
+  createMediaItem({ id: 'events-papagayo-09', title: 'Papagayo 09', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC03745-Mejorado-NR.jpg' }),
+  createMediaItem({ id: 'events-papagayo-10', title: 'Papagayo 10', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC03697-Mejorado-NR.jpg' }),
+  createMediaItem({ id: 'events-mola-video-03', title: 'Mola Hotel', category: 'events', subcategory: 'Mola', src: 'assets/images/events/EVENTS/MOLA/MOLA HOTEL.mp4' }),
+  createMediaItem({ id: 'events-mola-video-04', title: 'Mola Makeup', category: 'events', subcategory: 'Mola', src: 'assets/images/events/EVENTS/MOLA/MOLA MAKEUP.mp4' }),
+  createMediaItem({ id: 'events-mola-video-05', title: 'Mola Telefono', category: 'events', subcategory: 'Mola', src: 'assets/images/events/EVENTS/MOLA/MOLA TELEFONO.mp4' }),
+  createMediaItem({ id: 'events-meed-video-02', title: 'Mima Session', category: 'events', subcategory: 'Meed x Session', src: 'assets/images/events/EVENTS/MEED X SESSION/MIMA SESSION 03.mp4' }),
+  createMediaItem({ id: 'events-meed-video-03', title: 'Malen TS Session', category: 'events', subcategory: 'Meed x Session', src: 'assets/images/events/EVENTS/MEED X SESSION/MALEN TS SESSION 04.mp4' }),
+  createMediaItem({ id: 'events-meed-video-04', title: 'Pampa Session', category: 'events', subcategory: 'Meed x Session', src: 'assets/images/events/EVENTS/MEED X SESSION/PAMPA SESSION 01.mp4' }),
+  createMediaItem({ id: 'events-meed-video-05', title: 'Wendy Session', category: 'events', subcategory: 'Meed x Session', src: 'assets/images/events/EVENTS/MEED X SESSION/WENDY SESSION 02.mp4' }),
+
+  createMediaItem({ id: 'brands-caffuchinos-05', title: 'Caffuchinos 05', category: 'brands', subcategory: 'Caffuchinos', src: 'assets/images/brands/BRANDS/CAFFUCHINOS/DSC09298.jpg' }),
+  createMediaItem({ id: 'brands-caffuchinos-06', title: 'Caffuchinos 06', category: 'brands', subcategory: 'Caffuchinos', src: 'assets/images/brands/BRANDS/CAFFUCHINOS/DSC09285.jpg' }),
+  createMediaItem({ id: 'brands-caffuchinos-07', title: 'Caffuchinos 07', category: 'brands', subcategory: 'Caffuchinos', src: 'assets/images/brands/BRANDS/CAFFUCHINOS/DSC09234.jpg' }),
+  createMediaItem({ id: 'brands-caffuchinos-08', title: 'Caffuchinos 08', category: 'brands', subcategory: 'Caffuchinos', src: 'assets/images/brands/BRANDS/CAFFUCHINOS/DSC09185.jpg' }),
+  createMediaItem({ id: 'brands-paprika-04', title: 'Paprika 04', category: 'brands', subcategory: 'Paprika', src: 'assets/images/brands/BRANDS/PAPRIKA/DSC01247.jpg' }),
+  createMediaItem({ id: 'brands-paprika-05', title: 'Paprika 05', category: 'brands', subcategory: 'Paprika', src: 'assets/images/brands/BRANDS/PAPRIKA/DSC01236.jpg' }),
+  createMediaItem({ id: 'brands-paprika-06', title: 'Paprika 06', category: 'brands', subcategory: 'Paprika', src: 'assets/images/brands/BRANDS/PAPRIKA/DSC01220.jpg' }),
+  createMediaItem({ id: 'brands-paprika-07', title: 'Paprika 07', category: 'brands', subcategory: 'Paprika', src: 'assets/images/brands/BRANDS/PAPRIKA/DSC01199.jpg' }),
+  createMediaItem({ id: 'brands-paprika-08', title: 'Paprika 08', category: 'brands', subcategory: 'Paprika', src: 'assets/images/brands/BRANDS/PAPRIKA/DSC01196.jpg' }),
+  createMediaItem({ id: 'brands-paprika-09', title: 'Paprika 09', category: 'brands', subcategory: 'Paprika', src: 'assets/images/brands/BRANDS/PAPRIKA/DSC01114.jpg' }),
+  createMediaItem({ id: 'brands-mas-03', title: 'Mas Indumentaria 03', category: 'brands', subcategory: 'Mas Indumentaria', src: 'assets/images/brands/BRANDS/MAS INDUMENTARIA/DSC01727.jpg' }),
+  createMediaItem({ id: 'brands-mas-04', title: 'Mas Indumentaria 04', category: 'brands', subcategory: 'Mas Indumentaria', src: 'assets/images/brands/BRANDS/MAS INDUMENTARIA/DSC01707.jpg' }),
+  createMediaItem({ id: 'brands-mas-05', title: 'Mas Indumentaria 05', category: 'brands', subcategory: 'Mas Indumentaria', src: 'assets/images/brands/BRANDS/MAS INDUMENTARIA/DSC01704.jpg' }),
+  createMediaItem({ id: 'brands-mas-06', title: 'Mas Indumentaria 06', category: 'brands', subcategory: 'Mas Indumentaria', src: 'assets/images/brands/BRANDS/MAS INDUMENTARIA/DSC01683.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-03', title: 'Di Coccia 03', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05916.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-04', title: 'Di Coccia 04', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05843.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-05', title: 'Di Coccia 05', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05813.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-06', title: 'Di Coccia 06', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05771.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-07', title: 'Di Coccia 07', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05749.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-08', title: 'Di Coccia 08', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05721.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-09', title: 'Di Coccia 09', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05643.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-10', title: 'Di Coccia 10', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05566.jpg' }),
+  createMediaItem({ id: 'brands-di-coccia-11', title: 'Di Coccia 11', category: 'brands', subcategory: 'Di Coccia', src: 'assets/images/brands/BRANDS/DI COCCIA/DSC05513.jpg' }),
+  createMediaItem({ id: 'brands-mante-video-03', title: 'Mante 03', category: 'brands', subcategory: 'Mante', src: 'assets/images/brands/BRANDS/MANTE/MANTE 4.mp4' }),
+  createMediaItem({ id: 'brands-mante-video-04', title: 'Mante Ambo Detalle', category: 'brands', subcategory: 'Mante', src: 'assets/images/brands/BRANDS/MANTE/MANTE AMBO DETALLE.mp4' }),
+  createMediaItem({ id: 'brands-victory-video-03', title: 'Victory R3', category: 'brands', subcategory: 'Victory', src: 'assets/images/brands/BRANDS/VICTORY/VICTORY R3.mp4' }),
+  createMediaItem({ id: 'brands-victory-video-04', title: 'Victory Reel 3', category: 'brands', subcategory: 'Victory', src: 'assets/images/brands/BRANDS/VICTORY/REEL VICTORY 3.mp4' }),
+  createMediaItem({ id: 'brands-victory-video-05', title: 'Victory Reel 5', category: 'brands', subcategory: 'Victory', src: 'assets/images/brands/BRANDS/VICTORY/REEL VICTORY 5.mp4' }),
+
+  createMediaItem({ id: 'shows-ysy-a-05', title: 'YSY A 05', category: 'shows-night', subcategory: 'YSY A', src: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC05120.jpg' }),
+  createMediaItem({ id: 'shows-ysy-a-06', title: 'YSY A 06', category: 'shows-night', subcategory: 'YSY A', src: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC04973.jpg' }),
+  createMediaItem({ id: 'shows-ysy-a-07', title: 'YSY A 07', category: 'shows-night', subcategory: 'YSY A', src: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC04962.jpg' }),
+  createMediaItem({ id: 'shows-ysy-a-08', title: 'YSY A 08', category: 'shows-night', subcategory: 'YSY A', src: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC04913.jpg' }),
+  createMediaItem({ id: 'shows-ysy-a-09', title: 'YSY A 09', category: 'shows-night', subcategory: 'YSY A', src: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC04824-2.jpg' }),
+  createMediaItem({ id: 'shows-ysy-a-10', title: 'YSY A 10', category: 'shows-night', subcategory: 'YSY A', src: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC04745.jpg' }),
+  createMediaItem({ id: 'shows-amelie-video-02', title: 'Amelie Lens 02', category: 'shows-night', subcategory: 'Amelie Lens', src: 'assets/images/shows-night/SHOWS . NIGHT/AMELIE LENS/AMELIE DROP 5.mp4' }),
+  createMediaItem({ id: 'shows-amelie-video-03', title: 'Amelie Lens 03', category: 'shows-night', subcategory: 'Amelie Lens', src: 'assets/images/shows-night/SHOWS . NIGHT/AMELIE LENS/AMELIE DROP 7.mp4' }),
+  createMediaItem({ id: 'shows-argy-video-02', title: 'Argy 02', category: 'shows-night', subcategory: 'Argy', src: 'assets/images/shows-night/SHOWS . NIGHT/ARGY/ARGY 2.mp4' }),
+  createMediaItem({ id: 'shows-argy-video-03', title: 'Argy 03', category: 'shows-night', subcategory: 'Argy', src: 'assets/images/shows-night/SHOWS . NIGHT/ARGY/ARGY 3.mp4' }),
+  createMediaItem({ id: 'shows-argy-video-04', title: 'Argy 04', category: 'shows-night', subcategory: 'Argy', src: 'assets/images/shows-night/SHOWS . NIGHT/ARGY/ARGY 4.mp4' }),
+  createMediaItem({ id: 'shows-rufus-video-02', title: 'Rufus Du Sol 02', category: 'shows-night', subcategory: 'Rufus Du Sol', src: 'assets/images/shows-night/SHOWS . NIGHT/RUFUS DU SOL/RUFUS 2.mp4' }),
+  createMediaItem({ id: 'shows-rufus-video-03', title: 'Rufus Du Sol 03', category: 'shows-night', subcategory: 'Rufus Du Sol', src: 'assets/images/shows-night/SHOWS . NIGHT/RUFUS DU SOL/RUFUS 3.mp4' })
+];
+
+export const getMediaByCategory = (category: string): MediaItem[] =>
+  MEDIA_ITEMS.filter((item) => item.category === category);
+
+export const getPortfolioGroupsBySection = (sectionSlug: string): PortfolioGroup[] =>
+  getMediaGroupsByCategory(sectionSlug).map((group) => ({
+    id: `${group.sectionSlug}-${group.slug}`,
+    title: group.title,
+    slug: group.slug,
+    sectionSlug: group.sectionSlug,
+    year: group.year,
+    description: group.description,
+    coverImage: group.coverSrc,
+    coverType: group.coverType
+  }));
+
+export const getAllPortfolioGroups = (): PortfolioGroup[] => {
+  const sectionSlugs = Array.from(new Set(MEDIA_ITEMS.map((item) => item.sectionSlug)));
+
+  return sectionSlugs.flatMap((sectionSlug) => getPortfolioGroupsBySection(sectionSlug));
+};
+
+export const getRecommendedGroups = (sectionSlug: string, groupSlug: string, limit = 4): PortfolioGroup[] => {
+  const allGroups = getAllPortfolioGroups().filter(
+    (group) => !(group.sectionSlug === sectionSlug && group.slug === groupSlug)
+  );
+  const sameSectionGroups = allGroups.filter((group) => group.sectionSlug === sectionSlug);
+  const otherSectionGroups = allGroups.filter((group) => group.sectionSlug !== sectionSlug);
+
+  return [...sameSectionGroups, ...otherSectionGroups].slice(0, limit);
+};
+
+export const getMediaItemsByGroup = (sectionSlug: string, groupSlug: string): MediaItem[] =>
+  MEDIA_ITEMS.filter((item) => item.sectionSlug === sectionSlug && item.groupSlug === groupSlug);
+
+export const getMediaGroupBySlug = (sectionSlug: string, groupSlug: string): MediaGroup | undefined =>
+  getMediaGroupsByCategory(sectionSlug).find((group) => group.slug === groupSlug);
+
+export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
+  const groups = new Map<string, MediaItem[]>();
+
+  getMediaByCategory(category).forEach((item) => {
+    const title = item.subcategory ?? item.category;
+    groups.set(title, [...(groups.get(title) ?? []), item]);
+  });
+
+  return Array.from(groups.entries()).map(([title, items]) => {
+    const cover = items.find((item) => item.type === 'image') ?? items[0];
+
+    return {
+      title,
+      slug: slugify(title),
+      sectionSlug: category,
+      year: '2026',
+      description: `${title} photography and video selection.`,
+      coverSrc: cover.src,
+      coverType: cover.type,
+      items
+    };
+  });
+};

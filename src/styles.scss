@@ -1,0 +1,16 @@
+@use "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background-color: #f8f6f2;
+  color: #111827;
+}
+
+* {
+  box-sizing: border-box;
+}
