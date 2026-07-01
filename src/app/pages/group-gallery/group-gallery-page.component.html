@@ -1,36 +1,32 @@
 <section
-  class="px-0 py-10 sm:py-14 lg:py-16"
-  [class.bg-gray-950]="isDarkSection"
-  [class.rounded-3xl]="isDarkSection"
-  [class.px-4]="isDarkSection"
-  [class.sm:px-8]="isDarkSection"
+  class="relative min-h-screen px-4 py-14 sm:px-6 sm:py-16 lg:px-10 lg:py-20"
+  [ngClass]="theme.pageClass"
 >
   <ng-container *ngIf="group; else missingGroup">
-    <div class="mx-auto max-w-screen-2xl px-0 sm:px-2 lg:px-4">
+    <div class="mx-auto max-w-screen-2xl">
       <a
         [routerLink]="['/', sectionSlug]"
-        class="inline-flex text-sm font-medium tracking-wide transition hover:opacity-70"
-        [class.text-gray-300]="isDarkSection"
-        [class.text-gray-600]="!isDarkSection"
+        class="inline-flex text-sm font-medium tracking-wide transition"
+        [ngClass]="theme.backClass"
       >
         Back to {{ sectionTitle }}
       </a>
 
-      <header class="mb-12 mt-10 grid gap-6 border-b pb-10 sm:mb-16 lg:grid-cols-[1fr_0.8fr] lg:items-end" [class.border-gray-800]="isDarkSection" [class.border-stone-200]="!isDarkSection">
+      <header class="mb-12 mt-10 grid gap-6 border-b pb-10 sm:mb-16 lg:grid-cols-[1fr_0.8fr] lg:items-end" [ngClass]="theme.borderClass">
         <div>
-          <p class="text-xs font-medium uppercase tracking-[0.35em]" [class.text-gray-400]="isDarkSection" [class.text-gray-500]="!isDarkSection">
+          <p class="text-xs font-medium uppercase tracking-[0.35em]" [ngClass]="theme.eyebrowClass">
             {{ sectionTitle }}
           </p>
-          <h1 class="mt-4 text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl" [class.text-white]="isDarkSection">
+          <h1 class="mt-4 text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl" [ngClass]="theme.headingClass">
             {{ group.title }}
           </h1>
         </div>
 
         <div class="max-w-xl lg:justify-self-end">
-          <p *ngIf="group.year" class="text-sm font-medium" [class.text-gray-300]="isDarkSection" [class.text-gray-600]="!isDarkSection">
+          <p *ngIf="group.year" class="text-sm font-medium" [ngClass]="theme.descriptionClass">
             {{ group.year }}
           </p>
-          <p *ngIf="group.description" class="mt-4 text-base leading-relaxed" [class.text-gray-400]="isDarkSection" [class.text-gray-600]="!isDarkSection">
+          <p *ngIf="group.description" class="mt-4 text-base leading-relaxed" [ngClass]="theme.descriptionClass">
             {{ group.description }}
           </p>
         </div>
@@ -44,9 +40,9 @@
         (itemSelected)="openLightbox($event)"
       ></app-photo-grid>
 
-      <section *ngIf="relatedGroups.length" class="mt-24 border-t pt-12 sm:mt-28 sm:pt-14" [class.border-gray-800]="isDarkSection" [class.border-stone-200]="!isDarkSection">
+      <section *ngIf="relatedGroups.length" class="mt-24 border-t pt-12 sm:mt-28 sm:pt-14" [ngClass]="theme.borderClass">
         <div class="mb-8 flex items-end justify-between gap-4">
-          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl" [class.text-white]="isDarkSection">
+          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl" [ngClass]="theme.headingClass">
             You may also like
           </h2>
         </div>
@@ -55,7 +51,8 @@
           <a
             *ngFor="let relatedGroup of relatedGroups"
             [routerLink]="['/', relatedGroup.sectionSlug, relatedGroup.slug]"
-            class="group relative flex h-64 overflow-hidden rounded-2xl bg-gray-900 text-white sm:h-72 lg:h-80"
+            class="group relative flex h-64 overflow-hidden rounded-2xl bg-gray-900 text-white transition duration-500 hover:-translate-y-1 sm:h-72 lg:h-80"
+            [ngClass]="theme.relatedCardClass"
           >
             <img
               *ngIf="relatedGroup.coverType === 'image'"
@@ -71,7 +68,7 @@
               preload="metadata"
               class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
             ></video>
-            <div class="absolute inset-0 bg-black/50 transition duration-300 group-hover:bg-black/40"></div>
+            <div class="absolute inset-0 bg-black/50 transition duration-300 group-hover:bg-black/35"></div>
             <div class="relative mt-auto p-5">
               <p class="text-xs uppercase tracking-[0.25em] text-gray-300">{{ relatedGroup.year || relatedGroup.sectionSlug }}</p>
               <h3 class="mt-2 text-xl font-semibold tracking-tight">{{ relatedGroup.title }}</h3>
@@ -91,9 +88,9 @@
   </ng-container>
 
   <ng-template #missingGroup>
-    <div class="rounded-2xl border border-stone-200 bg-white p-8 text-center">
-      <h1 class="text-2xl font-semibold tracking-tight text-gray-900">Gallery not found</h1>
-      <p class="mt-3 text-gray-600">This group does not exist or has no media yet.</p>
+    <div class="mx-auto max-w-xl rounded-2xl border bg-white/80 p-8 text-center shadow-sm" [ngClass]="theme.borderClass">
+      <h1 class="text-2xl font-semibold tracking-tight" [ngClass]="theme.headingClass">Gallery not found</h1>
+      <p class="mt-3" [ngClass]="theme.descriptionClass">This group does not exist or has no media yet.</p>
       <a [routerLink]="['/', sectionSlug]" class="mt-6 inline-flex rounded-full bg-gray-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-700">
         Back to {{ sectionTitle }}
       </a>

@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "optimize-images": "node scripts/optimize-images.js",
+    "optimize-videos": "node scripts/optimize-videos.js",
+    "optimize-media": "npm run optimize-images && npm run optimize-videos"
   },
   "private": true,
   "packageManager": "npm@11.11.0",
@@ -28,6 +31,7 @@
     "jsdom": "^28.0.0",
     "postcss": "^8.5.15",
     "prettier": "^3.8.1",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4.3.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"

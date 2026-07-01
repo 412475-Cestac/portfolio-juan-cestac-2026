@@ -30,12 +30,45 @@ function slugify(value: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-const createMediaItem = (item: MediaInput): MediaItem => ({
-  ...item,
-  sectionSlug: item.sectionSlug ?? item.category,
-  groupSlug: item.groupSlug ?? slugify(item.subcategory ?? item.category),
-  type: item.type ?? getMediaType(item.src)
-});
+function getOptimizedMediaSrc(src: string): string {
+  const mediaType = getMediaType(src);
+
+  if (mediaType === 'video' && !src.endsWith('.mp4')) {
+    return src;
+  }
+
+  const optimizedSrc = mediaType === 'image' ? src.replace(/\.(jpe?g|png|webp)$/i, '.webp') : src;
+
+  if (optimizedSrc.startsWith('assets/images/brands/')) {
+    return optimizedSrc.replace('assets/images/brands/', 'assets/media/');
+  }
+
+  if (optimizedSrc.startsWith('assets/images/shows-night/')) {
+    return optimizedSrc.replace('assets/images/shows-night/', 'assets/media/');
+  }
+
+  if (optimizedSrc.startsWith('assets/images/events/')) {
+    return optimizedSrc.replace('assets/images/events/', 'assets/media/events/');
+  }
+
+  if (optimizedSrc.startsWith('assets/images/architecture-interiors/')) {
+    return optimizedSrc.replace('assets/images/architecture-interiors/', 'assets/media/architecture-interiors/');
+  }
+
+  return optimizedSrc;
+}
+
+const createMediaItem = (item: MediaInput): MediaItem => {
+  const src = getOptimizedMediaSrc(item.src);
+
+  return {
+    ...item,
+    src,
+    sectionSlug: item.sectionSlug ?? item.category,
+    groupSlug: item.groupSlug ?? slugify(item.subcategory ?? item.category),
+    type: item.type ?? getMediaType(src)
+  };
+};
 
 export const MEDIA_ITEMS: MediaItem[] = [
   createMediaItem({ id: 'events-papagayo-01', title: 'Papagayo 01', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04831.jpg' }),
@@ -141,7 +174,38 @@ export const MEDIA_ITEMS: MediaItem[] = [
   createMediaItem({ id: 'shows-argy-video-03', title: 'Argy 03', category: 'shows-night', subcategory: 'Argy', src: 'assets/images/shows-night/SHOWS . NIGHT/ARGY/ARGY 3.mp4' }),
   createMediaItem({ id: 'shows-argy-video-04', title: 'Argy 04', category: 'shows-night', subcategory: 'Argy', src: 'assets/images/shows-night/SHOWS . NIGHT/ARGY/ARGY 4.mp4' }),
   createMediaItem({ id: 'shows-rufus-video-02', title: 'Rufus Du Sol 02', category: 'shows-night', subcategory: 'Rufus Du Sol', src: 'assets/images/shows-night/SHOWS . NIGHT/RUFUS DU SOL/RUFUS 2.mp4' }),
-  createMediaItem({ id: 'shows-rufus-video-03', title: 'Rufus Du Sol 03', category: 'shows-night', subcategory: 'Rufus Du Sol', src: 'assets/images/shows-night/SHOWS . NIGHT/RUFUS DU SOL/RUFUS 3.mp4' })
+  createMediaItem({ id: 'shows-rufus-video-03', title: 'Rufus Du Sol 03', category: 'shows-night', subcategory: 'Rufus Du Sol', src: 'assets/images/shows-night/SHOWS . NIGHT/RUFUS DU SOL/RUFUS 3.mp4' }),
+
+  createMediaItem({ id: 'shows-hernan-video-03', title: 'Hernan Cattaneo 03', category: 'shows-night', subcategory: 'Hernan Cattaneo', src: 'assets/images/shows-night/SHOWS . NIGHT/HERNAN CATTANEO/3.mp4' }),
+  createMediaItem({ id: 'shows-hernan-video-04', title: 'Hernan Cattaneo 04', category: 'shows-night', subcategory: 'Hernan Cattaneo', src: 'assets/images/shows-night/SHOWS . NIGHT/HERNAN CATTANEO/4.mp4' }),
+
+  createMediaItem({ id: 'shows-amelie-video-04', title: 'Amelie Lens Drop 1', category: 'shows-night', subcategory: 'Amelie Lens', src: 'assets/images/shows-night/SHOWS . NIGHT/AMELIE LENS/AMELIE DROP 1.mp4' }),
+  createMediaItem({ id: 'shows-amelie-video-05', title: 'Amelie Lens Drop 6', category: 'shows-night', subcategory: 'Amelie Lens', src: 'assets/images/shows-night/SHOWS . NIGHT/AMELIE LENS/AMELIE DROP 6.mp4' }),
+  createMediaItem({ id: 'shows-amelie-video-06', title: 'Amelie Lens Drop 9', category: 'shows-night', subcategory: 'Amelie Lens', src: 'assets/images/shows-night/SHOWS . NIGHT/AMELIE LENS/AMELIE DROP 9.mp4' }),
+  createMediaItem({ id: 'shows-amelie-video-07', title: 'Amelie Lens Fin', category: 'shows-night', subcategory: 'Amelie Lens', src: 'assets/images/shows-night/SHOWS . NIGHT/AMELIE LENS/AMELIE FIN.mp4' }),
+
+  createMediaItem({ id: 'shows-konstantin-video-02', title: 'Adam Sellouk 01', category: 'shows-night', subcategory: 'Konstantin Sibold - Adam Sellouk', src: 'assets/images/shows-night/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/ADAM 1.mp4' }),
+  createMediaItem({ id: 'shows-konstantin-video-03', title: 'Adam Sellouk 03', category: 'shows-night', subcategory: 'Konstantin Sibold - Adam Sellouk', src: 'assets/images/shows-night/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/ADAM 3.mp4' }),
+  createMediaItem({ id: 'shows-konstantin-video-04', title: 'Konstantin Sibold 01', category: 'shows-night', subcategory: 'Konstantin Sibold - Adam Sellouk', src: 'assets/images/shows-night/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/KONSTANTIN 1.mp4' }),
+  createMediaItem({ id: 'shows-konstantin-video-05', title: 'Konstantin Sibold 02', category: 'shows-night', subcategory: 'Konstantin Sibold - Adam Sellouk', src: 'assets/images/shows-night/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/KONSTANTIN 2.mp4' }),
+  createMediaItem({ id: 'shows-konstantin-video-06', title: 'Konstantin & Adam 02', category: 'shows-night', subcategory: 'Konstantin Sibold - Adam Sellouk', src: 'assets/images/shows-night/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/KONSTANTIN Y ADAM 2.mp4' }),
+  createMediaItem({ id: 'shows-konstantin-video-07', title: 'Ni La Lluvia Nos Para', category: 'shows-night', subcategory: 'Konstantin Sibold - Adam Sellouk', src: 'assets/images/shows-night/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/NI LAS LLUVIA NOS PARA.mp4' }),
+
+  createMediaItem({ id: 'shows-mau-p-video-02', title: 'Mau P Drop', category: 'shows-night', subcategory: 'Mau P', src: 'assets/images/shows-night/SHOWS . NIGHT/MAU P/DRP.mp4' }),
+  createMediaItem({ id: 'shows-mau-p-video-03', title: 'Like I Like It', category: 'shows-night', subcategory: 'Mau P', src: 'assets/images/shows-night/SHOWS . NIGHT/MAU P/LIKE I LIKE IT.mp4' }),
+  createMediaItem({ id: 'shows-mau-p-video-04', title: 'One More Time', category: 'shows-night', subcategory: 'Mau P', src: 'assets/images/shows-night/SHOWS . NIGHT/MAU P/MAU P ONE MORE TIMME.mp4' }),
+  createMediaItem({ id: 'shows-mau-p-video-05', title: 'Mau P', category: 'shows-night', subcategory: 'Mau P', src: 'assets/images/shows-night/SHOWS . NIGHT/MAU P/MAU PP.mp4' }),
+
+  createMediaItem({ id: 'shows-pawsa-video-01', title: 'Pawsa Close', category: 'shows-night', subcategory: 'Pawsa', src: 'assets/images/shows-night/SHOWS . NIGHT/PAWSA/PAWSA CLOSE - Trim.mp4' }),
+  createMediaItem({ id: 'shows-pawsa-video-02', title: 'Pawsa Drop', category: 'shows-night', subcategory: 'Pawsa', src: 'assets/images/shows-night/SHOWS . NIGHT/PAWSA/PAWSA DROP.mp4' }),
+  createMediaItem({ id: 'shows-pawsa-video-03', title: 'Pick Up The Phone', category: 'shows-night', subcategory: 'Pawsa', src: 'assets/images/shows-night/SHOWS . NIGHT/PAWSA/PAWSA PICK UP THE PHONE.mp4' }),
+  createMediaItem({ id: 'shows-pawsa-video-04', title: 'Too Cool', category: 'shows-night', subcategory: 'Pawsa', src: 'assets/images/shows-night/SHOWS . NIGHT/PAWSA/PAWSA TOO COOL 2.mp4' }),
+
+  createMediaItem({ id: 'shows-tobi-video-02', title: 'Boat Party 04', category: 'shows-night', subcategory: 'Tobi Amuchastegui Boat Party', src: 'assets/images/shows-night/SHOWS . NIGHT/TOBI AMUCHASTEGUI BOAT PARTY/04.mp4' }),
+  createMediaItem({ id: 'shows-tobi-video-03', title: 'Boat Party 05', category: 'shows-night', subcategory: 'Tobi Amuchastegui Boat Party', src: 'assets/images/shows-night/SHOWS . NIGHT/TOBI AMUCHASTEGUI BOAT PARTY/05.mp4' }),
+  createMediaItem({ id: 'shows-tobi-video-04', title: 'Boat Party 07', category: 'shows-night', subcategory: 'Tobi Amuchastegui Boat Party', src: 'assets/images/shows-night/SHOWS . NIGHT/TOBI AMUCHASTEGUI BOAT PARTY/07.mp4' }),
+  createMediaItem({ id: 'shows-tobi-video-05', title: 'Boat Party 09', category: 'shows-night', subcategory: 'Tobi Amuchastegui Boat Party', src: 'assets/images/shows-night/SHOWS . NIGHT/TOBI AMUCHASTEGUI BOAT PARTY/09.mp4' }),
+  createMediaItem({ id: 'shows-tobi-video-06', title: 'Boat Party 12', category: 'shows-night', subcategory: 'Tobi Amuchastegui Boat Party', src: 'assets/images/shows-night/SHOWS . NIGHT/TOBI AMUCHASTEGUI BOAT PARTY/12.mp4' })
 ];
 
 export const getMediaByCategory = (category: string): MediaItem[] =>
@@ -181,6 +245,11 @@ export const getMediaItemsByGroup = (sectionSlug: string, groupSlug: string): Me
 export const getMediaGroupBySlug = (sectionSlug: string, groupSlug: string): MediaGroup | undefined =>
   getMediaGroupsByCategory(sectionSlug).find((group) => group.slug === groupSlug);
 
+const COVER_OVERRIDES: Record<string, string> = {
+  'Amelie Lens': 'assets/media/SHOWS . NIGHT/AMELIE LENS/cover.webp',
+  'Konstantin Sibold - Adam Sellouk': 'assets/media/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/cover.webp'
+};
+
 export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
   const groups = new Map<string, MediaItem[]>();
 
@@ -190,7 +259,9 @@ export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
   });
 
   return Array.from(groups.entries()).map(([title, items]) => {
-    const cover = items.find((item) => item.type === 'image') ?? items[0];
+    const override = COVER_OVERRIDES[title];
+    const coverSrc = override ?? items.find((item) => item.type === 'image')?.src ?? items[0].src;
+    const coverType: MediaType = override ? 'image' : (items.find((item) => item.type === 'image')?.type ?? items[0].type);
 
     return {
       title,
@@ -198,8 +269,8 @@ export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
       sectionSlug: category,
       year: '2026',
       description: `${title} photography and video selection.`,
-      coverSrc: cover.src,
-      coverType: cover.type,
+      coverSrc,
+      coverType,
       items
     };
   });

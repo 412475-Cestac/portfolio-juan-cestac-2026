@@ -1,15 +1,16 @@
-<section class="px-0 py-12 sm:py-16 lg:py-20">
-  <div class="mx-auto max-w-screen-2xl">
-    <header class="mb-12 max-w-3xl sm:mb-16">
+<section class="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_12%_6%,_rgba(180,83,9,0.13),_transparent_30%),linear-gradient(180deg,_#fffbeb_0%,_#f5f5f4_48%,_#d6d3d1_100%)] px-4 py-16 text-stone-950 sm:px-6 lg:px-10 lg:py-24">
+  <div class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-white/45 to-transparent"></div>
+  <div class="relative mx-auto max-w-screen-2xl">
+    <header class="mb-12 max-w-3xl border-b border-stone-900/10 pb-10 sm:mb-16">
       <p class="text-xs font-medium uppercase tracking-[0.35em] text-stone-500">Documentary moments</p>
-      <h1 class="mt-4 text-5xl font-semibold tracking-tight text-gray-950 sm:text-6xl lg:text-7xl">Events</h1>
-      <p class="mt-5 max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
+      <h1 class="mt-4 text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">Events</h1>
+      <p class="mt-5 max-w-2xl text-base leading-relaxed text-stone-600 sm:text-lg">
         Event photography focused on capturing real moments, atmosphere and emotions.
       </p>
     </header>
 
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12">
-      <app-group-card *ngFor="let group of groups; let index = index" [group]="group" [featured]="index === 0"></app-group-card>
+      <app-group-card *ngFor="let group of groups" [group]="group"></app-group-card>
     </div>
   </div>
 </section>

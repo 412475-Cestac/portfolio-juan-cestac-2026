@@ -1,17 +1,18 @@
-<section class="relative overflow-hidden rounded-[2rem] bg-[radial-gradient(circle_at_top_left,_#1f2937,_#030712_42%,_#020617)] px-4 py-16 text-white sm:px-6 lg:px-10 lg:py-24">
-  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_rgba(148,163,184,0.16),_transparent_34%)]"></div>
+<section class="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_12%_0%,_rgba(51,65,85,0.92),_transparent_34%),radial-gradient(circle_at_85%_70%,_rgba(30,41,59,0.72),_transparent_34%),linear-gradient(180deg,_#020617_0%,_#0f172a_48%,_#020617_100%)] px-4 py-16 text-white sm:px-6 lg:px-10 lg:py-24">
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,_rgba(148,163,184,0.14),_transparent_32%)]"></div>
+  <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10"></div>
 
   <div class="relative mx-auto max-w-screen-2xl">
-    <header class="mb-12 max-w-3xl sm:mb-16">
-      <p class="text-xs font-medium uppercase tracking-[0.35em] text-gray-400">Night Portfolio</p>
+    <header class="mb-12 max-w-3xl border-b border-white/10 pb-10 sm:mb-16">
+      <p class="text-xs font-medium uppercase tracking-[0.35em] text-slate-400">Night Portfolio</p>
       <h1 class="mt-4 text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">Shows & Night</h1>
-      <p class="mt-5 max-w-2xl text-base leading-relaxed text-gray-300 sm:text-lg">
+      <p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
         Photography for live shows, nightlife, music events and night atmosphere.
       </p>
     </header>
 
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12">
-      <app-group-card *ngFor="let group of groups; let index = index" [group]="group" [dark]="true" [featured]="index === 0"></app-group-card>
+      <app-group-card *ngFor="let group of groups" [group]="group" [dark]="true"></app-group-card>
     </div>
   </div>
 </section>
