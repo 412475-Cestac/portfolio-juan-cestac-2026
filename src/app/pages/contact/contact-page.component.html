@@ -1,53 +1,84 @@
-<section class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-  <div class="space-y-4">
-    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Contact</h1>
-    <p class="text-gray-600">Available for collaborations, campaigns and independent projects.</p>
-    <div class="space-y-2 text-sm text-gray-700">
-      <p><span class="font-medium text-gray-900">Email:</span> hello@example.com</p>
-      <p><span class="font-medium text-gray-900">Instagram:</span> @juan.cestac</p>
-      <p><span class="font-medium text-gray-900">Location:</span> Cordoba, Argentina</p>
+<section class="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_12%_12%,_rgba(120,113,108,0.22),_transparent_30%),linear-gradient(135deg,_#1c1917_0%,_#292524_42%,_#d6d3d1_100%)] px-4 py-10 text-white sm:px-6 sm:py-12 lg:px-10 lg:py-14">
+  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,_rgba(255,255,255,0.05)_1px,_transparent_1px)] bg-[size:96px_96px]"></div>
+
+  <div class="relative mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-8">
+    <div class="max-w-2xl space-y-5">
+      <figure class="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/20 p-2 shadow-[0_24px_80px_rgba(0,0,0,0.24)] sm:p-3">
+        <img
+          src="assets/media/contact/contact.webp"
+          alt="Editorial contact portrait"
+          class="h-auto w-full rounded-[1.35rem] transition duration-700 group-hover:scale-[1.01]"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent"></div>
+      </figure>
+
+    </div>
+
+    <div class="space-y-4 lg:sticky lg:top-24">
+      <div class="rounded-[1.75rem] border border-white/10 bg-white/8 p-5 backdrop-blur sm:p-6 lg:p-7">
+        <h1 class="max-w-xl text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl lg:text-4xl">Let's build a visual story</h1>
+        <p class="mt-5 text-xs font-medium uppercase tracking-[0.35em] text-stone-300">Contact</p>
+        <p class="mt-3 max-w-xl text-base leading-relaxed text-stone-200 sm:text-lg">
+          Available for campaigns, events, architecture, music projects and independent collaborations.
+        </p>
+      </div>
+
+      <form class="space-y-4 rounded-[1.75rem] border border-white/10 bg-white/8 p-5 text-white backdrop-blur sm:p-6 lg:p-7">
+        <div>
+          <label for="name" class="mb-2 block text-xs font-semibold uppercase tracking-[0.22em] text-stone-400">Name</label>
+          <input
+            id="name"
+            type="text"
+            class="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white outline-none transition placeholder:text-stone-500 focus:border-stone-400"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="mb-2 block text-xs font-semibold uppercase tracking-[0.22em] text-stone-400">Email</label>
+          <input
+            id="email"
+            type="email"
+            class="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white outline-none transition placeholder:text-stone-500 focus:border-stone-400"
+          />
+        </div>
+
+        <div>
+          <label for="projectType" class="mb-2 block text-xs font-semibold uppercase tracking-[0.22em] text-stone-400">Type of project</label>
+          <input
+            id="projectType"
+            type="text"
+            class="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white outline-none transition placeholder:text-stone-500 focus:border-stone-400"
+          />
+        </div>
+
+        <div>
+          <label for="message" class="mb-2 block text-xs font-semibold uppercase tracking-[0.22em] text-stone-400">Message</label>
+          <textarea
+            id="message"
+            rows="4"
+            class="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white outline-none transition placeholder:text-stone-500 focus:border-stone-400"
+          ></textarea>
+        </div>
+
+        <button type="button" class="inline-flex w-full items-center justify-center rounded-full bg-stone-950 px-6 py-2.5 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-stone-800 sm:w-auto">
+          Send
+        </button>
+      </form>
+
+      <div class="grid gap-3 text-sm text-stone-200 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+        <div class="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
+          <p class="text-xs uppercase tracking-[0.25em] text-stone-200">Email</p>
+          <p class="mt-3 font-medium text-white">hello@example.com</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
+          <p class="text-xs uppercase tracking-[0.25em] text-stone-200">Instagram</p>
+          <p class="mt-3 font-medium text-white">@juan.cestac</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
+          <p class="text-xs uppercase tracking-[0.25em] text-stone-200">Location</p>
+          <p class="mt-3 font-medium text-white">Cordoba, Argentina</p>
+        </div>
+      </div>
     </div>
   </div>
-
-  <form class="space-y-4 rounded-xl border border-stone-200 bg-white p-5">
-    <div>
-      <label for="name" class="mb-1 block text-sm font-medium text-gray-700">Name</label>
-      <input
-        id="name"
-        type="text"
-        class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm outline-none transition focus:border-gray-900"
-      />
-    </div>
-
-    <div>
-      <label for="email" class="mb-1 block text-sm font-medium text-gray-700">Email</label>
-      <input
-        id="email"
-        type="email"
-        class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm outline-none transition focus:border-gray-900"
-      />
-    </div>
-
-    <div>
-      <label for="projectType" class="mb-1 block text-sm font-medium text-gray-700">Type of project</label>
-      <input
-        id="projectType"
-        type="text"
-        class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm outline-none transition focus:border-gray-900"
-      />
-    </div>
-
-    <div>
-      <label for="message" class="mb-1 block text-sm font-medium text-gray-700">Message</label>
-      <textarea
-        id="message"
-        rows="5"
-        class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm outline-none transition focus:border-gray-900"
-      ></textarea>
-    </div>
-
-    <button type="button" class="rounded-lg bg-gray-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-700">
-      Send
-    </button>
-  </form>
 </section>

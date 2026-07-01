@@ -1,15 +1,16 @@
-<section class="rounded-[2rem] bg-stone-100/70 px-4 py-16 sm:px-6 lg:px-10 lg:py-20">
-  <div class="mx-auto max-w-screen-2xl">
-    <header class="mb-12 max-w-3xl sm:mb-16">
-      <p class="text-xs font-medium uppercase tracking-[0.35em] text-stone-500">Commercial stories</p>
-      <h1 class="mt-4 text-5xl font-semibold tracking-tight text-gray-950 sm:text-6xl lg:text-7xl">Brands</h1>
-      <p class="mt-5 max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
+<section class="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_82%_8%,_rgba(214,211,209,0.75),_transparent_28%),linear-gradient(180deg,_#fafaf9_0%,_#f5f5f4_46%,_#e7e5e4_100%)] px-4 py-16 text-neutral-950 sm:px-6 lg:px-10 lg:py-24">
+  <div class="pointer-events-none absolute inset-y-0 right-0 w-1/3 border-l border-neutral-900/5 bg-white/20"></div>
+  <div class="relative mx-auto max-w-screen-2xl">
+    <header class="mb-12 max-w-3xl border-b border-neutral-900/10 pb-10 sm:mb-16">
+      <p class="text-xs font-medium uppercase tracking-[0.35em] text-neutral-500">Commercial stories</p>
+      <h1 class="mt-4 text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">Brands</h1>
+      <p class="mt-5 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg">
         Visual content for brands, products and commercial projects.
       </p>
     </header>
 
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12">
-      <app-group-card *ngFor="let group of groups; let index = index" [group]="group" [featured]="index === 0"></app-group-card>
+      <app-group-card *ngFor="let group of groups" [group]="group"></app-group-card>
     </div>
   </div>
 </section>
