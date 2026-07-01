@@ -1,0 +1,19 @@
+<div class="min-h-screen" [class.bg-stone-50]="!isHomeRoute" [class.text-gray-900]="!isHomeRoute" [class.bg-black]="isHomeRoute">
+  @if (!isHomeRoute) {
+    <app-navbar></app-navbar>
+  }
+
+  @if (isHomeRoute) {
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  } @else {
+    <main class="mx-auto w-full max-w-7xl px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+      <router-outlet></router-outlet>
+    </main>
+  }
+
+  @if (!isHomeRoute) {
+    <app-footer></app-footer>
+  }
+</div>

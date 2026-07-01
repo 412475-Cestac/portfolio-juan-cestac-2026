@@ -1,0 +1,48 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true">
+  <button
+    type="button"
+    class="absolute right-4 top-4 z-10 rounded-full border border-white/20 px-4 py-2 text-sm font-medium text-white/80 transition hover:bg-white hover:text-black sm:right-6 sm:top-6"
+    (click)="close.emit()"
+    aria-label="Close lightbox"
+  >
+    Close
+  </button>
+
+  <button
+    type="button"
+    class="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/20 px-3 py-3 text-white/80 transition hover:bg-white hover:text-black sm:left-6"
+    (click)="previous()"
+    aria-label="Previous media"
+  >
+    &larr;
+  </button>
+
+  <ng-container *ngIf="selectedItem as item">
+    <img
+      *ngIf="item.type === 'image'"
+      [src]="item.src"
+      [alt]="item.title"
+      class="max-h-[90vh] max-w-[92vw] object-contain"
+    />
+
+    <video
+      *ngIf="item.type === 'video'"
+      [src]="item.src"
+      controls
+      autoplay
+      muted
+      playsinline
+      preload="metadata"
+      class="max-h-[90vh] max-w-[92vw]"
+    ></video>
+  </ng-container>
+
+  <button
+    type="button"
+    class="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/20 px-3 py-3 text-white/80 transition hover:bg-white hover:text-black sm:right-6"
+    (click)="next()"
+    aria-label="Next media"
+  >
+    &rarr;
+  </button>
+</div>

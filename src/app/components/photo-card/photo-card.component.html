@@ -1,0 +1,45 @@
+<article
+  class="group overflow-hidden rounded-2xl"
+  [class.cursor-zoom-in]="editorial"
+  [class.border]="!editorial"
+  [class.border-gray-800]="dark && !editorial"
+  [class.border-stone-200]="!dark && !editorial"
+  [class.lg:col-span-2]="featured"
+  (click)="itemSelected.emit(item)"
+  (keydown.enter)="itemSelected.emit(item)"
+  tabindex="0"
+>
+  <img
+    *ngIf="item.type === 'image'"
+    [src]="item.src"
+    [alt]="item.title"
+    class="w-full transition duration-500 group-hover:scale-[1.01]"
+    [class.h-auto]="editorial"
+    [class.object-contain]="editorial"
+    [class.object-cover]="!editorial"
+    [class.h-72]="!large && !editorial"
+    [class.sm:h-80]="!large && !editorial"
+    [class.h-[30rem]]="large && !editorial"
+  />
+  <video
+    *ngIf="item.type === 'video'"
+    [src]="item.src"
+    controls
+    muted
+    playsinline
+    preload="metadata"
+    class="w-full bg-black"
+    [class.h-auto]="editorial"
+    [class.object-contain]="editorial"
+    [class.object-cover]="!editorial"
+    [class.h-72]="!large && !editorial"
+    [class.sm:h-80]="!large && !editorial"
+    [class.h-[30rem]]="large && !editorial"
+  ></video>
+  <div *ngIf="!editorial" class="p-3" [class.bg-gray-950]="dark" [class.bg-white]="!dark">
+    <h3 class="text-sm font-medium" [class.text-gray-200]="dark" [class.text-gray-800]="!dark">{{ item.title }}</h3>
+    <p *ngIf="item.description" class="mt-1 text-xs" [class.text-gray-400]="dark" [class.text-gray-500]="!dark">
+      {{ item.description }}
+    </p>
+  </div>
+</article>
