@@ -9,10 +9,10 @@ import { PhotoGridComponent } from '../../components/photo-grid/photo-grid.compo
 import { MediaLightboxComponent } from '../../components/media-lightbox/media-lightbox.component';
 
 const SECTION_TITLES: Record<string, string> = {
-  events: 'Eventos',
-  brands: 'Marcas',
+  events: 'Events',
+  brands: 'Brands',
   'shows-night': 'Shows & Night',
-  'architecture-interiors': 'Arquitectura e Interiores',
+  'architecture-interiors': 'Architecture & Interiors',
   'personal-work': 'Trabajo personal'
 };
 

@@ -37,28 +37,28 @@ export class HomePageComponent {
       posterUrl: 'assets/media/home/shows-night-poster.webp'
     },
     {
-      label: 'Eventos',
+      label: 'Events',
       path: '/events',
       videoMobileUrl: 'assets/media/home/events-mobile.mp4',
       videoDesktopUrl: 'assets/media/home/events-desktop.mp4',
       posterUrl: 'assets/media/home/events-poster.webp'
     },
     {
-      label: 'Marcas',
+      label: 'Brands',
       path: '/brands',
       videoMobileUrl: 'assets/media/home/brands-mobile.mp4',
       videoDesktopUrl: 'assets/media/home/brands-desktop.mp4',
       posterUrl: 'assets/media/home/brands-poster.webp'
     },
     {
-      label: 'Arquitectura e Interiores',
+      label: 'Architecture & Interiors',
       path: '/architecture-interiors',
       videoMobileUrl: 'assets/media/home/architecture-interiors-mobile.mp4',
       videoDesktopUrl: 'assets/media/home/architecture-interiors-desktop.mp4',
       posterUrl: 'assets/media/home/architecture-interiors-poster.webp'
     },
     {
-      label: 'Contacto',
+      label: 'Contact',
       path: '/contact',
       videoMobileUrl: 'assets/media/home/contact-mobile.mp4',
       videoDesktopUrl: 'assets/media/home/contact-desktop.mp4',

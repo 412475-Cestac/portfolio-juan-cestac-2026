@@ -135,7 +135,7 @@ const GROUP_CONFIG: Record<string, GroupConfig> = {
     description: 'Selección de video',
     coverImage: 'assets/media/SHOWS . NIGHT/PAWSA/cover.webp'
   },
-  [groupKey('architecture-interiors', 'Architecture & Interiors')]: { title: 'Arquitectura e Interiores', description: 'Selección de fotografía' },
+  [groupKey('architecture-interiors', 'Architecture & Interiors')]: { title: 'Architecture & Interiors', description: 'Selección de fotografía' },
   [groupKey('architecture-interiors', 'Videos de arquitectura')]: {
     description: 'Selección de video',
     coverImage: 'assets/media/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08890.webp'
