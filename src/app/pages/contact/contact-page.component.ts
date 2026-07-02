@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, Validators, NonNullableFormBuilder } from '@angular/forms';
-import { CONTACT_EMAIL } from '../../config/contact-form.config';
+import { CONTACT_EMAIL, IS_CONTACT_FORM_CONFIGURED } from '../../config/contact-form.config';
 import { ContactService } from '../../services/contact.service';
 
 @Component({
@@ -14,6 +14,9 @@ export class ContactPageComponent {
   private readonly contactService = inject(ContactService);
 
   readonly contactEmail = CONTACT_EMAIL;
+  readonly isContactFormConfigured = IS_CONTACT_FORM_CONFIGURED;
+  readonly whatsappLabel = '+54 9 3517 69-6363';
+  readonly whatsappUrl = 'https://wa.me/5493517696363';
   isSending = false;
   successMessage = '';
   errorMessage = '';
@@ -31,6 +34,11 @@ export class ContactPageComponent {
 
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
+      return;
+    }
+
+    if (!this.isContactFormConfigured) {
+      this.errorMessage = `El formulario todavía no está configurado. Escribí directamente a ${this.contactEmail}.`;
       return;
     }
 
