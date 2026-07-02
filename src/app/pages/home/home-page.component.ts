@@ -14,14 +14,14 @@ export class HomePageComponent {
 
   quickLinks = [
     { label: 'SHOWS & NIGHT', path: '/shows-night', videoUrl: 'assets/videos/home/shows-night.mp4' },
-    { label: 'EVENTS', path: '/events', videoUrl: 'assets/videos/home/events.mp4' },
-    { label: 'BRANDS', path: '/brands', videoUrl: 'assets/videos/home/brands.mp4' },
+    { label: 'EVENTOS', path: '/events', videoUrl: 'assets/videos/home/events.mp4' },
+    { label: 'MARCAS', path: '/brands', videoUrl: 'assets/videos/home/brands.mp4' },
     {
-      label: 'ARCHITECTURE & INTERIORS',
+      label: 'ARQUITECTURA E INTERIORES',
       path: '/architecture-interiors',
       videoUrl: 'assets/videos/home/architecture-interiors.mp4'
     },
-    { label: 'CONTACT', path: '/contact', videoUrl: 'assets/videos/home/contact.mp4' }
+    { label: 'CONTACTO', path: '/contact', videoUrl: 'assets/videos/home/contact.mp4' }
   ];
 
   setActiveVideo(videoUrl: string): void {

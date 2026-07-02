@@ -10,11 +10,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class NavbarComponent {
   links = [
-    { label: 'Home', path: '/' },
-    { label: 'Events', path: '/events' },
-    { label: 'Brands', path: '/brands' },
+    { label: 'Inicio', path: '/' },
+    { label: 'Eventos', path: '/events' },
+    { label: 'Marcas', path: '/brands' },
     { label: 'Shows & Night', path: '/shows-night' },
-    { label: 'Architecture & Interiors', path: '/architecture-interiors' },
-    { label: 'Contact', path: '/contact' }
+    { label: 'Arquitectura e Interiores', path: '/architecture-interiors' },
+    { label: 'Contacto', path: '/contact' }
   ];
 }
