@@ -2,33 +2,33 @@ import { PortfolioSection } from '../models/portfolio-section.model';
 
 export const PORTFOLIO_SECTIONS: PortfolioSection[] = [
   {
-    title: 'eventos',
+    title: 'Eventos',
     slug: 'events',
-    description: 'momentos reales de eventos sociales y corporativos.',
+    description: 'Momentos reales de eventos sociales y corporativos.',
     coverImage: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04831.jpg'
   },
   {
-    title: 'marcas',
+    title: 'Marcas',
     slug: 'brands',
-    description: 'contenido visual para productos y proyectos comerciales.',
+    description: 'Contenido visual para productos y proyectos comerciales.',
     coverImage: 'assets/images/brands/BRANDS/CAFFUCHINOS/DSC09354.jpg'
   },
   {
-    title: 'shows & night',
+    title: 'Shows & Night',
     slug: 'shows-night',
-    description: 'shows en vivo, nightlife y atmósferas musicales.',
+    description: 'Shows en vivo, nightlife y atmósferas musicales.',
     coverImage: 'assets/images/shows-night/SHOWS . NIGHT/YSY A/DSC06122.jpg'
   },
   {
-    title: 'arquitectura e interiores',
+    title: 'Arquitectura e Interiores',
     slug: 'architecture-interiors',
-    description: 'espacios, líneas, luz y composición.',
+    description: 'Espacios, líneas, luz y composición.',
     coverImage: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08890.jpg'
   },
   {
-    title: 'contacto',
+    title: 'Contacto',
     slug: 'contact',
-    description: 'contacto para colaboraciones y proyectos.',
+    description: 'Contacto para colaboraciones y proyectos.',
     coverImage: 'assets/images/home/shows-night.jpg'
   }
 ];
