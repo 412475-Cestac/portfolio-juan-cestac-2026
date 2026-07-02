@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild, inject } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -17,6 +17,7 @@ type HomeLink = {
   templateUrl: './home-page.component.html'
 })
 export class HomePageComponent {
+  private cdr = inject(ChangeDetectorRef);
   @ViewChild('heroVideo') private heroVideo?: ElementRef<HTMLVideoElement>;
 
   defaultVideoUrl = 'assets/media/home/shows-night-desktop.mp4';
@@ -74,7 +75,15 @@ export class HomePageComponent {
     const video = this.heroVideo?.nativeElement;
 
     if (!video || typeof IntersectionObserver === 'undefined') {
-      this.shouldLoadVideo = true;
+      this.enableVideoLoad();
+      return;
+    }
+
+    const rect = video.getBoundingClientRect();
+    const isAlreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+    if (isAlreadyVisible) {
+      this.enableVideoLoad();
       return;
     }
 
@@ -83,7 +92,7 @@ export class HomePageComponent {
         return;
       }
 
-      this.shouldLoadVideo = true;
+      this.enableVideoLoad();
       this.observer?.disconnect();
     }, { rootMargin: '200px' });
 
@@ -98,6 +107,24 @@ export class HomePageComponent {
     this.activeLink = link;
     this.activePosterUrl = link.posterUrl;
     this.activeVideoUrl = this.resolveVideoUrl(link);
+    this.enableVideoLoad();
+  }
+
+  private enableVideoLoad(): void {
+    this.shouldLoadVideo = true;
+    this.cdr.detectChanges();
+    this.reloadActiveVideo();
+  }
+
+  private reloadActiveVideo(): void {
+    const video = this.heroVideo?.nativeElement;
+
+    if (!video) {
+      return;
+    }
+
+    video.load();
+    void video.play().catch(() => undefined);
   }
 
   private resolveVideoUrl(link: HomeLink): string {
