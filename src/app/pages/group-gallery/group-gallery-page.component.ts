@@ -9,11 +9,11 @@ import { PhotoGridComponent } from '../../components/photo-grid/photo-grid.compo
 import { MediaLightboxComponent } from '../../components/media-lightbox/media-lightbox.component';
 
 const SECTION_TITLES: Record<string, string> = {
-  events: 'Eventos',
-  brands: 'Marcas',
-  'shows-night': 'Shows & Night',
-  'architecture-interiors': 'Arquitectura e Interiores',
-  'personal-work': 'Trabajo personal'
+  events: 'eventos',
+  brands: 'marcas',
+  'shows-night': 'shows & night',
+  'architecture-interiors': 'arquitectura e interiores',
+  'personal-work': 'trabajo personal'
 };
 
 const SECTION_THEMES: Record<string, {
@@ -85,7 +85,7 @@ export class GroupGalleryPageComponent {
   groupSlug = '';
   group: MediaGroup | undefined;
   relatedGroups: PortfolioGroup[] = [];
-  sectionTitle = 'Portfolio';
+  sectionTitle = 'portfolio';
   theme = SECTION_THEMES['brands'];
   isDarkSection = false;
   isLightboxOpen = false;
@@ -99,7 +99,7 @@ export class GroupGalleryPageComponent {
         this.groupSlug = params.get('groupSlug') ?? '';
         this.group = getMediaGroupBySlug(this.sectionSlug, this.groupSlug);
         this.relatedGroups = getRecommendedGroups(this.sectionSlug, this.groupSlug);
-        this.sectionTitle = SECTION_TITLES[this.sectionSlug] ?? 'Portfolio';
+        this.sectionTitle = SECTION_TITLES[this.sectionSlug] ?? 'portfolio';
         this.theme = SECTION_THEMES[this.sectionSlug] ?? SECTION_THEMES['brands'];
         this.isDarkSection = this.sectionSlug === 'shows-night';
         this.isLightboxOpen = false;

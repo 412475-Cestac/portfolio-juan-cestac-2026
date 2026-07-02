@@ -6,18 +6,18 @@
     <div class="mx-auto max-w-screen-2xl">
       <a
         [routerLink]="['/', sectionSlug]"
-        class="inline-flex text-sm font-medium tracking-wide transition"
+        class="inline-flex text-sm font-medium transition"
         [ngClass]="theme.backClass"
       >
-        Volver a {{ sectionTitle }}
+        volver a {{ sectionTitle }}
       </a>
 
       <header class="mb-12 mt-10 grid gap-6 border-b pb-10 sm:mb-16 lg:grid-cols-[1fr_0.8fr] lg:items-end" [ngClass]="theme.borderClass">
         <div>
-          <p class="text-xs font-medium uppercase tracking-[0.35em]" [ngClass]="theme.eyebrowClass">
+          <p class="text-xs font-medium" [ngClass]="theme.eyebrowClass">
             {{ sectionTitle }}
           </p>
-          <h1 class="mt-4 text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl" [ngClass]="theme.headingClass">
+          <h1 class="mt-4 text-5xl font-medium sm:text-6xl lg:text-7xl" [ngClass]="theme.headingClass">
             {{ group.title }}
           </h1>
         </div>
@@ -42,8 +42,8 @@
 
       <section *ngIf="relatedGroups.length" class="mt-24 border-t pt-12 sm:mt-28 sm:pt-14" [ngClass]="theme.borderClass">
         <div class="mb-8 flex items-end justify-between gap-4">
-          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl" [ngClass]="theme.headingClass">
-            También te puede gustar
+          <h2 class="text-2xl font-medium sm:text-3xl" [ngClass]="theme.headingClass">
+            también te puede gustar
           </h2>
         </div>
 
@@ -70,8 +70,8 @@
             ></video>
             <div class="absolute inset-0 bg-black/50 transition duration-300 group-hover:bg-black/35"></div>
             <div class="relative mt-auto p-5">
-              <p class="text-xs uppercase tracking-[0.25em] text-gray-300">{{ relatedGroup.year || relatedGroup.sectionSlug }}</p>
-              <h3 class="mt-2 text-xl font-semibold tracking-tight">{{ relatedGroup.title }}</h3>
+              <p class="text-xs text-gray-300">{{ relatedGroup.year || relatedGroup.sectionSlug }}</p>
+              <h3 class="mt-2 text-xl font-medium">{{ relatedGroup.title }}</h3>
             </div>
           </a>
         </div>
@@ -89,10 +89,10 @@
 
   <ng-template #missingGroup>
     <div class="mx-auto max-w-xl rounded-2xl border bg-white/80 p-8 text-center shadow-sm" [ngClass]="theme.borderClass">
-      <h1 class="text-2xl font-semibold tracking-tight" [ngClass]="theme.headingClass">Gallery not found</h1>
-      <p class="mt-3" [ngClass]="theme.descriptionClass">This group does not exist or has no media yet.</p>
+      <h1 class="text-2xl font-medium" [ngClass]="theme.headingClass">galería no encontrada</h1>
+      <p class="mt-3" [ngClass]="theme.descriptionClass">este grupo no existe o todavía no tiene contenido.</p>
       <a [routerLink]="['/', sectionSlug]" class="mt-6 inline-flex rounded-full bg-gray-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-700">
-        Volver a {{ sectionTitle }}
+        volver a {{ sectionTitle }}
       </a>
     </div>
   </ng-template>

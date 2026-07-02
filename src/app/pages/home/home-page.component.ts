@@ -13,15 +13,15 @@ export class HomePageComponent {
   activeVideoUrl = this.defaultVideoUrl;
 
   quickLinks = [
-    { label: 'SHOWS & NIGHT', path: '/shows-night', videoUrl: 'assets/videos/home/shows-night.mp4' },
-    { label: 'EVENTOS', path: '/events', videoUrl: 'assets/videos/home/events.mp4' },
-    { label: 'MARCAS', path: '/brands', videoUrl: 'assets/videos/home/brands.mp4' },
+    { label: 'shows & night', path: '/shows-night', videoUrl: 'assets/videos/home/shows-night.mp4' },
+    { label: 'eventos', path: '/events', videoUrl: 'assets/videos/home/events.mp4' },
+    { label: 'marcas', path: '/brands', videoUrl: 'assets/videos/home/brands.mp4' },
     {
-      label: 'ARQUITECTURA E INTERIORES',
+      label: 'arquitectura e interiores',
       path: '/architecture-interiors',
       videoUrl: 'assets/videos/home/architecture-interiors.mp4'
     },
-    { label: 'CONTACTO', path: '/contact', videoUrl: 'assets/videos/home/contact.mp4' }
+    { label: 'contacto', path: '/contact', videoUrl: 'assets/videos/home/contact.mp4' }
   ];
 
   setActiveVideo(videoUrl: string): void {
