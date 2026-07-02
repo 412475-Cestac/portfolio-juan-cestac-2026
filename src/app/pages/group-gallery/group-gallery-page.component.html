@@ -9,7 +9,7 @@
         class="inline-flex text-sm font-medium transition"
         [ngClass]="theme.backClass"
       >
-        volver a {{ sectionTitle }}
+        Volver a {{ sectionTitle }}
       </a>
 
       <header class="mb-12 mt-10 grid gap-6 border-b pb-10 sm:mb-16 lg:grid-cols-[1fr_0.8fr] lg:items-end" [ngClass]="theme.borderClass">
@@ -43,7 +43,7 @@
       <section *ngIf="relatedGroups.length" class="mt-24 border-t pt-12 sm:mt-28 sm:pt-14" [ngClass]="theme.borderClass">
         <div class="mb-8 flex items-end justify-between gap-4">
           <h2 class="text-2xl font-medium sm:text-3xl" [ngClass]="theme.headingClass">
-            también te puede gustar
+            También te puede gustar
           </h2>
         </div>
 
@@ -89,10 +89,10 @@
 
   <ng-template #missingGroup>
     <div class="mx-auto max-w-xl rounded-2xl border bg-white/80 p-8 text-center shadow-sm" [ngClass]="theme.borderClass">
-      <h1 class="text-2xl font-medium" [ngClass]="theme.headingClass">galería no encontrada</h1>
-      <p class="mt-3" [ngClass]="theme.descriptionClass">este grupo no existe o todavía no tiene contenido.</p>
+      <h1 class="text-2xl font-medium" [ngClass]="theme.headingClass">Galería no encontrada</h1>
+      <p class="mt-3" [ngClass]="theme.descriptionClass">Este grupo no existe o todavía no tiene contenido.</p>
       <a [routerLink]="['/', sectionSlug]" class="mt-6 inline-flex rounded-full bg-gray-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-700">
-        volver a {{ sectionTitle }}
+        Volver a {{ sectionTitle }}
       </a>
     </div>
   </ng-template>
