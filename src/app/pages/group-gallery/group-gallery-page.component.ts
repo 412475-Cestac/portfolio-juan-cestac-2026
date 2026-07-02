@@ -1,16 +1,19 @@
 import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { combineLatest } from 'rxjs';
 import { getMediaGroupBySlug, getRecommendedGroups } from '../../data/photos';
+import { MediaGroup, PortfolioGroup } from '../../models/media.model';
 import { PhotoGridComponent } from '../../components/photo-grid/photo-grid.component';
 import { MediaLightboxComponent } from '../../components/media-lightbox/media-lightbox.component';
 
 const SECTION_TITLES: Record<string, string> = {
-  events: 'Events',
-  brands: 'Brands',
+  events: 'Eventos',
+  brands: 'Marcas',
   'shows-night': 'Shows & Night',
-  'architecture-interiors': 'Architecture & Interiors',
-  'personal-work': 'Personal Work'
+  'architecture-interiors': 'Arquitectura e Interiores',
+  'personal-work': 'Trabajo personal'
 };
 
 const SECTION_THEMES: Record<string, {
@@ -78,15 +81,31 @@ const SECTION_THEMES: Record<string, {
 export class GroupGalleryPageComponent {
   private route = inject(ActivatedRoute);
 
-  sectionSlug = this.route.snapshot.data['sectionSlug'] ?? '';
-  groupSlug = this.route.snapshot.paramMap.get('groupSlug') ?? '';
-  group = getMediaGroupBySlug(this.sectionSlug, this.groupSlug);
-  relatedGroups = getRecommendedGroups(this.sectionSlug, this.groupSlug);
-  sectionTitle = SECTION_TITLES[this.sectionSlug] ?? 'Portfolio';
-  theme = SECTION_THEMES[this.sectionSlug] ?? SECTION_THEMES['brands'];
-  isDarkSection = this.sectionSlug === 'shows-night';
+  sectionSlug = '';
+  groupSlug = '';
+  group: MediaGroup | undefined;
+  relatedGroups: PortfolioGroup[] = [];
+  sectionTitle = 'Portfolio';
+  theme = SECTION_THEMES['brands'];
+  isDarkSection = false;
   isLightboxOpen = false;
   selectedIndex = 0;
+
+  constructor() {
+    combineLatest([this.route.paramMap, this.route.data])
+      .pipe(takeUntilDestroyed())
+      .subscribe(([params, data]) => {
+        this.sectionSlug = data['sectionSlug'] ?? '';
+        this.groupSlug = params.get('groupSlug') ?? '';
+        this.group = getMediaGroupBySlug(this.sectionSlug, this.groupSlug);
+        this.relatedGroups = getRecommendedGroups(this.sectionSlug, this.groupSlug);
+        this.sectionTitle = SECTION_TITLES[this.sectionSlug] ?? 'Portfolio';
+        this.theme = SECTION_THEMES[this.sectionSlug] ?? SECTION_THEMES['brands'];
+        this.isDarkSection = this.sectionSlug === 'shows-night';
+        this.isLightboxOpen = false;
+        this.selectedIndex = 0;
+      });
+  }
 
   openLightbox(index: number): void {
     this.selectedIndex = index;

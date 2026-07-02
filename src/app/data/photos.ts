@@ -6,6 +6,13 @@ type MediaInput = Omit<MediaItem, 'type' | 'sectionSlug' | 'groupSlug'> & {
   type?: MediaType;
 };
 
+type GroupConfig = {
+  title?: string;
+  description: string;
+  coverImage?: string;
+  coverType?: MediaType;
+};
+
 export function getMediaType(src: string): MediaType {
   const extension = src.split('.').pop()?.toLowerCase();
 
@@ -68,6 +75,71 @@ const createMediaItem = (item: MediaInput): MediaItem => {
     groupSlug: item.groupSlug ?? slugify(item.subcategory ?? item.category),
     type: item.type ?? getMediaType(src)
   };
+};
+
+const groupKey = (sectionSlug: string, title: string): string => `${sectionSlug}/${title}`;
+
+const GROUP_CONFIG: Record<string, GroupConfig> = {
+  [groupKey('events', 'Papagayo')]: { description: 'Selección de fotografía' },
+  [groupKey('events', 'Redbull x La Fabrica')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/events/EVENTS/REDBULL X LA FABRICA/cover.webp'
+  },
+  [groupKey('events', 'Mola')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/events/EVENTS/MOLA/cover.webp'
+  },
+  [groupKey('events', 'Meed x Session')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/events/EVENTS/MEED X SESSION/cover.webp'
+  },
+  [groupKey('brands', 'Caffuchinos')]: { description: 'Selección de fotografía' },
+  [groupKey('brands', 'Paprika')]: { description: 'Selección de fotografía' },
+  [groupKey('brands', 'Mas Indumentaria')]: { title: 'Más', description: 'Selección de fotografía' },
+  [groupKey('brands', 'Di Coccia')]: { description: 'Selección de fotografía' },
+  [groupKey('brands', 'Mante')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/BRANDS/MANTE/cover.webp'
+  },
+  [groupKey('brands', 'Victory')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/BRANDS/VICTORY/cover.webp'
+  },
+  [groupKey('shows-night', 'YSY A')]: { description: 'Selección de fotografía' },
+  [groupKey('shows-night', 'Hernan Cattaneo')]: { description: 'Selección de video' },
+  [groupKey('shows-night', 'Amelie Lens')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/SHOWS . NIGHT/AMELIE LENS/cover.webp'
+  },
+  [groupKey('shows-night', 'Argy')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/SHOWS . NIGHT/ARGY/cover.webp'
+  },
+  [groupKey('shows-night', 'Konstantin Sibold - Adam Sellouk')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/cover.webp'
+  },
+  [groupKey('shows-night', 'Mau P')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/SHOWS . NIGHT/MAU P/cover.webp'
+  },
+  [groupKey('shows-night', 'Rufus Du Sol')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/SHOWS . NIGHT/RUFUS DU SOL/cover.webp'
+  },
+  [groupKey('shows-night', 'Tobi Amuchastegui Boat Party')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/SHOWS . NIGHT/TOBI AMUCHASTEGUI BOAT PARTY/cover.webp'
+  },
+  [groupKey('shows-night', 'Pawsa')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/SHOWS . NIGHT/PAWSA/cover.webp'
+  },
+  [groupKey('architecture-interiors', 'Architecture & Interiors')]: { title: 'Arquitectura e Interiores', description: 'Selección de fotografía' },
+  [groupKey('architecture-interiors', 'Videos de arquitectura')]: {
+    description: 'Selección de video',
+    coverImage: 'assets/media/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08890.webp'
+  }
 };
 
 export const MEDIA_ITEMS: MediaItem[] = [
@@ -245,11 +317,6 @@ export const getMediaItemsByGroup = (sectionSlug: string, groupSlug: string): Me
 export const getMediaGroupBySlug = (sectionSlug: string, groupSlug: string): MediaGroup | undefined =>
   getMediaGroupsByCategory(sectionSlug).find((group) => group.slug === groupSlug);
 
-const COVER_OVERRIDES: Record<string, string> = {
-  'Amelie Lens': 'assets/media/SHOWS . NIGHT/AMELIE LENS/cover.webp',
-  'Konstantin Sibold - Adam Sellouk': 'assets/media/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/cover.webp'
-};
-
 export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
   const groups = new Map<string, MediaItem[]>();
 
@@ -258,20 +325,40 @@ export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
     groups.set(title, [...(groups.get(title) ?? []), item]);
   });
 
-  return Array.from(groups.entries()).map(([title, items]) => {
-    const override = COVER_OVERRIDES[title];
-    const coverSrc = override ?? items.find((item) => item.type === 'image')?.src ?? items[0].src;
-    const coverType: MediaType = override ? 'image' : (items.find((item) => item.type === 'image')?.type ?? items[0].type);
+  const mediaGroups = Array.from(groups.entries()).map(([title, items]) => {
+    const config = GROUP_CONFIG[groupKey(category, title)];
+    const imageCover = items.find((item) => item.type === 'image');
+    const fallbackCover = imageCover ?? items[0];
+    const coverSrc = config?.coverImage ?? imageCover?.src ?? fallbackCover.src;
+    const coverType: MediaType = config?.coverType ?? (config?.coverImage ? 'image' : (imageCover?.type ?? fallbackCover.type));
 
     return {
-      title,
+      title: config?.title ?? title,
       slug: slugify(title),
       sectionSlug: category,
       year: '2026',
-      description: `${title} photography and video selection.`,
+      description: config?.description ?? 'Selección de fotografía',
       coverSrc,
       coverType,
       items
     };
   });
+
+  if (category === 'architecture-interiors') {
+    const title = 'Videos de arquitectura';
+    const config = GROUP_CONFIG[groupKey(category, title)];
+
+    mediaGroups.push({
+      title,
+      slug: slugify(title),
+      sectionSlug: category,
+      year: '2026',
+      description: config?.description,
+      coverSrc: config?.coverImage ?? 'assets/media/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08890.webp',
+      coverType: 'image',
+      items: []
+    });
+  }
+
+  return mediaGroups;
 };
