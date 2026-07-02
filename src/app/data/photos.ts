@@ -80,64 +80,64 @@ const createMediaItem = (item: MediaInput): MediaItem => {
 const groupKey = (sectionSlug: string, title: string): string => `${sectionSlug}/${title}`;
 
 const GROUP_CONFIG: Record<string, GroupConfig> = {
-  [groupKey('events', 'Papagayo')]: { description: 'Selección de fotografía' },
+  [groupKey('events', 'Papagayo')]: { description: 'selección de fotografía' },
   [groupKey('events', 'Redbull x La Fabrica')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/events/EVENTS/REDBULL X LA FABRICA/cover.webp'
   },
   [groupKey('events', 'Mola')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/events/EVENTS/MOLA/cover.webp'
   },
   [groupKey('events', 'Meed x Session')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/events/EVENTS/MEED X SESSION/cover.webp'
   },
-  [groupKey('brands', 'Caffuchinos')]: { description: 'Selección de fotografía' },
-  [groupKey('brands', 'Paprika')]: { description: 'Selección de fotografía' },
-  [groupKey('brands', 'Mas Indumentaria')]: { title: 'Más', description: 'Selección de fotografía' },
-  [groupKey('brands', 'Di Coccia')]: { description: 'Selección de fotografía' },
+  [groupKey('brands', 'Caffuchinos')]: { description: 'selección de fotografía' },
+  [groupKey('brands', 'Paprika')]: { description: 'selección de fotografía' },
+  [groupKey('brands', 'Mas Indumentaria')]: { title: 'más', description: 'selección de fotografía' },
+  [groupKey('brands', 'Di Coccia')]: { description: 'selección de fotografía' },
   [groupKey('brands', 'Mante')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/BRANDS/MANTE/cover.webp'
   },
   [groupKey('brands', 'Victory')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/BRANDS/VICTORY/cover.webp'
   },
-  [groupKey('shows-night', 'YSY A')]: { description: 'Selección de fotografía' },
-  [groupKey('shows-night', 'Hernan Cattaneo')]: { description: 'Selección de video' },
+  [groupKey('shows-night', 'YSY A')]: { description: 'selección de fotografía' },
+  [groupKey('shows-night', 'Hernan Cattaneo')]: { description: 'selección de video' },
   [groupKey('shows-night', 'Amelie Lens')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/SHOWS . NIGHT/AMELIE LENS/cover.webp'
   },
   [groupKey('shows-night', 'Argy')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/SHOWS . NIGHT/ARGY/cover.webp'
   },
   [groupKey('shows-night', 'Konstantin Sibold - Adam Sellouk')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/SHOWS . NIGHT/KONSTANTIN SIBOLD - ADAM SELLOUK/cover.webp'
   },
   [groupKey('shows-night', 'Mau P')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/SHOWS . NIGHT/MAU P/cover.webp'
   },
   [groupKey('shows-night', 'Rufus Du Sol')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/SHOWS . NIGHT/RUFUS DU SOL/cover.webp'
   },
   [groupKey('shows-night', 'Tobi Amuchastegui Boat Party')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/SHOWS . NIGHT/TOBI AMUCHASTEGUI BOAT PARTY/cover.webp'
   },
   [groupKey('shows-night', 'Pawsa')]: {
-    description: 'Selección de video',
+    description: 'selección de video',
     coverImage: 'assets/media/SHOWS . NIGHT/PAWSA/cover.webp'
   },
-  [groupKey('architecture-interiors', 'Architecture & Interiors')]: { title: 'Arquitectura e Interiores', description: 'Selección de fotografía' },
-  [groupKey('architecture-interiors', 'Videos de arquitectura')]: {
-    description: 'Selección de video',
+  [groupKey('architecture-interiors', 'Architecture & Interiors')]: { title: 'arquitectura e interiores', description: 'selección de fotografía' },
+  [groupKey('architecture-interiors', 'videos de arquitectura')]: {
+    description: 'selección de video',
     coverImage: 'assets/media/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08890.webp'
   }
 };
@@ -337,7 +337,7 @@ export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
       slug: slugify(title),
       sectionSlug: category,
       year: '2026',
-      description: config?.description ?? 'Selección de fotografía',
+      description: config?.description ?? 'selección de fotografía',
       coverSrc,
       coverType,
       items
@@ -345,7 +345,7 @@ export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
   });
 
   if (category === 'architecture-interiors') {
-    const title = 'Videos de arquitectura';
+    const title = 'videos de arquitectura';
     const config = GROUP_CONFIG[groupKey(category, title)];
 
     mediaGroups.push({
