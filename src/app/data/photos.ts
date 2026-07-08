@@ -85,11 +85,11 @@ const GROUP_CONFIG: Record<string, GroupConfig> = {
   [groupKey('events', 'Papagayo')]: { description: 'Selección de fotografía' },
   [groupKey('events', 'Redbull x La Fabrica')]: {
     description: 'Selección de video',
-    coverImage: 'assets/media/events/EVENTS/REDBULL X LA FABRICA/cover.webp'
+    coverImage: 'assets/media/performance/covers/events-redbull-x-la-fabrica.webp'
   },
   [groupKey('events', 'Mola')]: {
     description: 'Selección de video',
-    coverImage: 'assets/media/events/EVENTS/MOLA/cover.webp'
+    coverImage: 'assets/media/performance/covers/events-mola.webp'
   },
   [groupKey('events', 'Meed x Session')]: {
     description: 'Selección de video',
@@ -147,6 +147,8 @@ const GROUP_CONFIG: Record<string, GroupConfig> = {
 const OPTIMIZED_COVER_OVERRIDES: Record<string, string> = {
   'events/papagayo': 'assets/media/performance/covers/events-papagayo.webp',
   'events/meed-x-session': 'assets/media/performance/covers/events-meed-x-session.webp',
+  'events/redbull-x-la-fabrica': 'assets/media/performance/covers/events-redbull-x-la-fabrica.webp',
+  'events/mola': 'assets/media/performance/covers/events-mola.webp',
 
   'brands/paprika': 'assets/media/performance/covers/brands-paprika.webp',
   'brands/mas-indumentaria': 'assets/media/performance/covers/brands-mas-indumentaria.webp',
