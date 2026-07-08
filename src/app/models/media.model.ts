@@ -9,6 +9,7 @@ export interface MediaItem {
   groupSlug: string;
   src: string;
   type: MediaType;
+  poster?: string;
   description?: string;
 }
 

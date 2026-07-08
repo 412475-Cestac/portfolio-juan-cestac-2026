@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { MediaItem } from '../../models/media.model';
 
 @Component({
   selector: 'app-photo-card',
   standalone: true,
-  imports: [NgIf],
+  imports: [],
   templateUrl: './photo-card.component.html'
 })
 export class PhotoCardComponent {

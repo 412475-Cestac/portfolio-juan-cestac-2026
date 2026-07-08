@@ -1,23 +1,25 @@
 @if (editorial) {
   <div class="columns-1 gap-8 space-y-8 lg:columns-2 xl:gap-10 xl:space-y-10">
-    <app-photo-card
-      *ngFor="let item of items; let index = index"
-      class="mb-8 block break-inside-avoid xl:mb-10"
-      [item]="item"
-      [dark]="dark"
-      [large]="large"
-      [editorial]="true"
-      (itemSelected)="itemSelected.emit(index)"
-    ></app-photo-card>
+    @for (item of items; track item.id; let index = $index) {
+      <app-photo-card
+        class="mb-8 block break-inside-avoid xl:mb-10"
+        [item]="item"
+        [dark]="dark"
+        [large]="large"
+        [editorial]="true"
+        (itemSelected)="itemSelected.emit(index)"
+      ></app-photo-card>
+    }
   </div>
 } @else {
   <div class="grid grid-cols-1 gap-6" [class.lg:grid-cols-2]="large" [class.sm:grid-cols-2]="!large" [class.lg:grid-cols-3]="!large">
-    <app-photo-card
-      *ngFor="let item of items; let index = index"
-      [item]="item"
-      [dark]="dark"
-      [large]="large"
-      (itemSelected)="itemSelected.emit(index)"
-    ></app-photo-card>
+    @for (item of items; track item.id; let index = $index) {
+      <app-photo-card
+        [item]="item"
+        [dark]="dark"
+        [large]="large"
+        (itemSelected)="itemSelected.emit(index)"
+      ></app-photo-card>
+    }
   </div>
 }

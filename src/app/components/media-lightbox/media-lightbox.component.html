@@ -17,25 +17,28 @@
     &larr;
   </button>
 
-  <ng-container *ngIf="selectedItem as item">
-    <img
-      *ngIf="item.type === 'image'"
-      [src]="item.src"
-      [alt]="item.title"
-      class="max-h-[90vh] max-w-[92vw] object-contain"
-    />
+  @if (selectedItem; as item) {
+    @if (item.type === 'image') {
+      <img
+        [src]="item.src"
+        [alt]="item.title"
+        class="max-h-[90vh] max-w-[92vw] object-contain"
+      />
+    }
 
-    <video
-      *ngIf="item.type === 'video'"
-      [src]="item.src"
-      controls
-      autoplay
-      muted
-      playsinline
-      preload="metadata"
-      class="max-h-[90vh] max-w-[92vw]"
-    ></video>
-  </ng-container>
+    @if (item.type === 'video') {
+      <video
+        [src]="item.src"
+        [poster]="item.poster"
+        controls
+        autoplay
+        muted
+        playsinline
+        preload="metadata"
+        class="max-h-[90vh] max-w-[92vw]"
+      ></video>
+    }
+  }
 
   <button
     type="button"

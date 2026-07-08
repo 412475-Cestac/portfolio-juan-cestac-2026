@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgFor } from '@angular/common';
 import { MediaItem } from '../../models/media.model';
 import { PhotoCardComponent } from '../photo-card/photo-card.component';
 
 @Component({
   selector: 'app-photo-grid',
   standalone: true,
-  imports: [NgFor, PhotoCardComponent],
+  imports: [PhotoCardComponent],
   templateUrl: './photo-grid.component.html'
 })
 export class PhotoGridComponent {

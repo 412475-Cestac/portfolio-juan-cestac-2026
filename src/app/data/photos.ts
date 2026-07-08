@@ -67,13 +67,15 @@ function getOptimizedMediaSrc(src: string): string {
 
 const createMediaItem = (item: MediaInput): MediaItem => {
   const src = getOptimizedMediaSrc(item.src);
+  const type = item.type ?? getMediaType(src);
 
   return {
     ...item,
     src,
+    type,
+    poster: item.poster ?? (type === 'video' ? `assets/media/performance/video-posters/${item.id}.webp` : undefined),
     sectionSlug: item.sectionSlug ?? item.category,
-    groupSlug: item.groupSlug ?? slugify(item.subcategory ?? item.category),
-    type: item.type ?? getMediaType(src)
+    groupSlug: item.groupSlug ?? slugify(item.subcategory ?? item.category)
   };
 };
 
@@ -136,11 +138,36 @@ const GROUP_CONFIG: Record<string, GroupConfig> = {
     coverImage: 'assets/media/SHOWS . NIGHT/PAWSA/cover.webp'
   },
   [groupKey('architecture-interiors', 'Architecture & Interiors')]: { title: 'Architecture & Interiors', description: 'Selección de fotografía' },
-  [groupKey('architecture-interiors', 'Videos de arquitectura')]: {
+  [groupKey('architecture-interiors', 'Architecture Videos')]: {
     description: 'Selección de video',
-    coverImage: 'assets/media/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08890.webp'
+    coverImage: 'assets/media/performance/covers/architecture-videos.webp'
   }
 };
+
+const OPTIMIZED_COVER_OVERRIDES: Record<string, string> = {
+  'events/papagayo': 'assets/media/performance/covers/events-papagayo.webp',
+  'events/meed-x-session': 'assets/media/performance/covers/events-meed-x-session.webp',
+
+  'brands/paprika': 'assets/media/performance/covers/brands-paprika.webp',
+  'brands/mas-indumentaria': 'assets/media/performance/covers/brands-mas-indumentaria.webp',
+  'brands/di-coccia': 'assets/media/performance/covers/brands-di-coccia.webp',
+  'brands/mante': 'assets/media/performance/covers/brands-mante.webp',
+  'brands/victory': 'assets/media/performance/covers/brands-victory.webp',
+
+  'shows-night/ysy-a': 'assets/media/performance/covers/shows-ysy-a.webp',
+  'shows-night/amelie-lens': 'assets/media/performance/covers/shows-amelie-lens.webp',
+  'shows-night/argy': 'assets/media/performance/covers/shows-argy.webp',
+  'shows-night/konstantin-sibold-adam-sellouk': 'assets/media/performance/covers/shows-konstantin.webp',
+  'shows-night/mau-p': 'assets/media/performance/covers/shows-mau-p.webp',
+  'shows-night/pawsa': 'assets/media/performance/covers/shows-pawsa.webp',
+  'shows-night/rufus-du-sol': 'assets/media/performance/covers/shows-rufus-du-sol.webp',
+  'shows-night/tobi-amuchastegui-boat-party': 'assets/media/performance/covers/shows-tobi-amuchastegui.webp',
+
+  'architecture-interiors/architecture-videos': 'assets/media/performance/covers/architecture-videos.webp'
+};
+
+const getOptimizedCoverOverride = (sectionSlug: string, title: string): string | undefined =>
+  OPTIMIZED_COVER_OVERRIDES[`${sectionSlug}/${slugify(title)}`];
 
 export const MEDIA_ITEMS: MediaItem[] = [
   createMediaItem({ id: 'events-papagayo-01', title: 'Papagayo 01', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04831.jpg' }),
@@ -192,6 +219,10 @@ export const MEDIA_ITEMS: MediaItem[] = [
   createMediaItem({ id: 'architecture-06', title: 'Architecture 06', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC03516.jpg' }),
   createMediaItem({ id: 'architecture-07', title: 'Architecture 07', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC03459.jpg' }),
   createMediaItem({ id: 'architecture-08', title: 'Architecture 08', category: 'architecture-interiors', subcategory: 'Architecture & Interiors', src: 'assets/images/architecture-interiors/ARCHITECTURE . INTERIORS/DSC02802.jpg' }),
+  createMediaItem({ id: 'architecture-video-01', title: 'Maretich 2026', category: 'architecture-interiors', subcategory: 'Architecture Videos', src: 'assets/media/architecture-interiors/VIDEOS ARQUITECTURA/MARETICH 2026 1.mp4' }),
+  createMediaItem({ id: 'architecture-video-02', title: 'Maretich El Bosque', category: 'architecture-interiors', subcategory: 'Architecture Videos', src: 'assets/media/architecture-interiors/VIDEOS ARQUITECTURA/MARETICH EL BOSQUE.mp4' }),
+  createMediaItem({ id: 'architecture-video-03', title: 'Maretich El Collado', category: 'architecture-interiors', subcategory: 'Architecture Videos', src: 'assets/media/architecture-interiors/VIDEOS ARQUITECTURA/MARETICH EL COLLADO.mp4' }),
+  createMediaItem({ id: 'architecture-video-04', title: 'Maretich Foresta', category: 'architecture-interiors', subcategory: 'Architecture Videos', src: 'assets/media/architecture-interiors/VIDEOS ARQUITECTURA/MARETICH FORESTA.mp4' }),
 
   createMediaItem({ id: 'events-papagayo-07', title: 'Papagayo 07', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC03778-Mejorado-NR.jpg' }),
   createMediaItem({ id: 'events-papagayo-08', title: 'Papagayo 08', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC03752-Mejorado-NR.jpg' }),
@@ -327,10 +358,11 @@ export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
 
   const mediaGroups = Array.from(groups.entries()).map(([title, items]) => {
     const config = GROUP_CONFIG[groupKey(category, title)];
+    const optimizedCover = getOptimizedCoverOverride(category, title);
     const imageCover = items.find((item) => item.type === 'image');
     const fallbackCover = imageCover ?? items[0];
-    const coverSrc = config?.coverImage ?? imageCover?.src ?? fallbackCover.src;
-    const coverType: MediaType = config?.coverType ?? (config?.coverImage ? 'image' : (imageCover?.type ?? fallbackCover.type));
+    const coverSrc = optimizedCover ?? config?.coverImage ?? imageCover?.src ?? fallbackCover.src;
+    const coverType: MediaType = optimizedCover ? 'image' : (config?.coverType ?? (config?.coverImage ? 'image' : (imageCover?.type ?? fallbackCover.type)));
 
     return {
       title: config?.title ?? title,
@@ -343,22 +375,6 @@ export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
       items
     };
   });
-
-  if (category === 'architecture-interiors') {
-    const title = 'Videos de arquitectura';
-    const config = GROUP_CONFIG[groupKey(category, title)];
-
-    mediaGroups.push({
-      title,
-      slug: slugify(title),
-      sectionSlug: category,
-      year: '2026',
-      description: config?.description,
-      coverSrc: config?.coverImage ?? 'assets/media/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08890.webp',
-      coverType: 'image',
-      items: []
-    });
-  }
 
   return mediaGroups;
 };

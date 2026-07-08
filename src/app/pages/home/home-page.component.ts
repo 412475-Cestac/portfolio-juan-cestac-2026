@@ -1,137 +1,89 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild, inject } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { Component, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 type HomeLink = {
   label: string;
   path: string;
-  videoMobileUrl: string;
-  videoDesktopUrl: string;
-  posterUrl: string;
+  backgroundImageUrl: string;
 };
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [NgFor, RouterLink],
+  imports: [RouterLink],
   templateUrl: './home-page.component.html'
 })
 export class HomePageComponent {
-  private cdr = inject(ChangeDetectorRef);
-  @ViewChild('heroVideo') private heroVideo?: ElementRef<HTMLVideoElement>;
-
-  defaultVideoUrl = 'assets/media/home/shows-night-desktop.mp4';
-  defaultPosterUrl = 'assets/media/home/shows-night-poster.webp';
-  activeVideoUrl = this.defaultVideoUrl;
-  activePosterUrl = this.defaultPosterUrl;
-  shouldLoadVideo = false;
-  private activeLink?: HomeLink;
-  private observer?: IntersectionObserver;
+  activeBackgroundImageUrl = 'assets/media/performance/home/shows-night.webp';
+  previousBackgroundImageUrl = '';
+  isFadingBackground = false;
+  private fadeTimeout?: ReturnType<typeof setTimeout>;
 
   quickLinks: HomeLink[] = [
     {
       label: 'Shows & Night',
       path: '/shows-night',
-      videoMobileUrl: 'assets/media/home/shows-night-mobile.mp4',
-      videoDesktopUrl: 'assets/media/home/shows-night-desktop.mp4',
-      posterUrl: 'assets/media/home/shows-night-poster.webp'
+      backgroundImageUrl: 'assets/media/performance/home/shows-night.webp'
     },
     {
       label: 'Events',
       path: '/events',
-      videoMobileUrl: 'assets/media/home/events-mobile.mp4',
-      videoDesktopUrl: 'assets/media/home/events-desktop.mp4',
-      posterUrl: 'assets/media/home/events-poster.webp'
+      backgroundImageUrl: 'assets/media/performance/home/events.webp'
     },
     {
       label: 'Brands',
       path: '/brands',
-      videoMobileUrl: 'assets/media/home/brands-mobile.mp4',
-      videoDesktopUrl: 'assets/media/home/brands-desktop.mp4',
-      posterUrl: 'assets/media/home/brands-poster.webp'
+      backgroundImageUrl: 'assets/media/performance/home/brands.webp'
     },
     {
       label: 'Architecture & Interiors',
       path: '/architecture-interiors',
-      videoMobileUrl: 'assets/media/home/architecture-interiors-mobile.mp4',
-      videoDesktopUrl: 'assets/media/home/architecture-interiors-desktop.mp4',
-      posterUrl: 'assets/media/home/architecture-interiors-poster.webp'
+      backgroundImageUrl: 'assets/media/performance/home/architecture-interiors.webp'
     },
     {
       label: 'Contact',
       path: '/contact',
-      videoMobileUrl: 'assets/media/home/contact-mobile.mp4',
-      videoDesktopUrl: 'assets/media/home/contact-desktop.mp4',
-      posterUrl: 'assets/media/home/contact-poster.webp'
+      backgroundImageUrl: 'assets/media/performance/home/contact.webp'
     }
   ];
 
   constructor() {
-    this.activeLink = this.quickLinks[0];
-    this.activeVideoUrl = this.resolveVideoUrl(this.activeLink);
-  }
-
-  ngAfterViewInit(): void {
-    const video = this.heroVideo?.nativeElement;
-
-    if (!video || typeof IntersectionObserver === 'undefined') {
-      this.enableVideoLoad();
-      return;
-    }
-
-    const rect = video.getBoundingClientRect();
-    const isAlreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
-
-    if (isAlreadyVisible) {
-      this.enableVideoLoad();
-      return;
-    }
-
-    this.observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) {
-        return;
-      }
-
-      this.enableVideoLoad();
-      this.observer?.disconnect();
-    }, { rootMargin: '200px' });
-
-    this.observer.observe(video);
+    this.preloadBackgroundImages();
   }
 
   ngOnDestroy(): void {
-    this.observer?.disconnect();
+    if (this.fadeTimeout) {
+      clearTimeout(this.fadeTimeout);
+    }
   }
 
-  setActiveVideo(link: HomeLink): void {
-    this.activeLink = link;
-    this.activePosterUrl = link.posterUrl;
-    this.activeVideoUrl = this.resolveVideoUrl(link);
-    this.enableVideoLoad();
-  }
-
-  private enableVideoLoad(): void {
-    this.shouldLoadVideo = true;
-    this.cdr.detectChanges();
-    this.reloadActiveVideo();
-  }
-
-  private reloadActiveVideo(): void {
-    const video = this.heroVideo?.nativeElement;
-
-    if (!video) {
+  setActiveBackground(link: HomeLink): void {
+    if (link.backgroundImageUrl === this.activeBackgroundImageUrl) {
       return;
     }
 
-    video.load();
-    void video.play().catch(() => undefined);
-  }
+    this.previousBackgroundImageUrl = this.activeBackgroundImageUrl;
+    this.activeBackgroundImageUrl = link.backgroundImageUrl;
+    this.isFadingBackground = true;
 
-  private resolveVideoUrl(link: HomeLink): string {
-    if (typeof window === 'undefined') {
-      return link.videoDesktopUrl;
+    if (this.fadeTimeout) {
+      clearTimeout(this.fadeTimeout);
     }
 
-    return window.innerWidth < 768 ? link.videoMobileUrl : link.videoDesktopUrl;
+    this.fadeTimeout = setTimeout(() => {
+      this.isFadingBackground = false;
+      this.previousBackgroundImageUrl = '';
+    }, 600);
+  }
+
+  private preloadBackgroundImages(): void {
+    if (typeof Image === 'undefined') {
+      return;
+    }
+
+    this.quickLinks.forEach((link) => {
+      const image = new Image();
+      image.src = link.backgroundImageUrl;
+    });
   }
 }

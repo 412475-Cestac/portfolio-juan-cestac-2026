@@ -2,7 +2,7 @@
   class="relative min-h-screen px-4 py-14 sm:px-6 sm:py-16 lg:px-10 lg:py-20"
   [ngClass]="theme.pageClass"
 >
-  <ng-container *ngIf="group; else missingGroup">
+  @if (group) {
     <div class="mx-auto max-w-screen-2xl">
       <a
         [routerLink]="['/', sectionSlug]"
@@ -23,12 +23,16 @@
         </div>
 
         <div class="max-w-xl lg:justify-self-end">
-          <p *ngIf="group.year" class="text-sm font-medium" [ngClass]="theme.descriptionClass">
-            {{ group.year }}
-          </p>
-          <p *ngIf="group.description" class="mt-4 text-base leading-relaxed" [ngClass]="theme.descriptionClass">
-            {{ group.description }}
-          </p>
+          @if (group.year) {
+            <p class="text-sm font-medium" [ngClass]="theme.descriptionClass">
+              {{ group.year }}
+            </p>
+          }
+          @if (group.description) {
+            <p class="mt-4 text-base leading-relaxed" [ngClass]="theme.descriptionClass">
+              {{ group.description }}
+            </p>
+          }
         </div>
       </header>
 
@@ -40,7 +44,8 @@
         (itemSelected)="openLightbox($event)"
       ></app-photo-grid>
 
-      <section *ngIf="relatedGroups.length" class="mt-24 border-t pt-12 sm:mt-28 sm:pt-14" [ngClass]="theme.borderClass">
+      @if (relatedGroups.length) {
+      <section class="mt-24 border-t pt-12 sm:mt-28 sm:pt-14" [ngClass]="theme.borderClass">
         <div class="mb-8 flex items-end justify-between gap-4">
           <h2 class="text-2xl font-medium sm:text-3xl" [ngClass]="theme.headingClass">
             También te puede gustar
@@ -48,46 +53,51 @@
         </div>
 
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          <a
-            *ngFor="let relatedGroup of relatedGroups"
-            [routerLink]="['/', relatedGroup.sectionSlug, relatedGroup.slug]"
-            class="group relative flex h-64 overflow-hidden rounded-2xl bg-gray-900 text-white transition duration-500 hover:-translate-y-1 sm:h-72 lg:h-80"
-            [ngClass]="theme.relatedCardClass"
-          >
-            <img
-              *ngIf="relatedGroup.coverType === 'image'"
-              [src]="relatedGroup.coverImage"
-              [alt]="relatedGroup.title"
-              class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-            />
-            <video
-              *ngIf="relatedGroup.coverType === 'video'"
-              [src]="relatedGroup.coverImage"
-              muted
-              playsinline
-              preload="metadata"
-              class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-            ></video>
-            <div class="absolute inset-0 bg-black/50 transition duration-300 group-hover:bg-black/35"></div>
-            <div class="relative mt-auto p-5">
-              <p class="text-xs text-gray-300">{{ relatedGroup.year || relatedGroup.sectionSlug }}</p>
-              <h3 class="mt-2 text-xl font-medium">{{ relatedGroup.title }}</h3>
-            </div>
-          </a>
+          @for (relatedGroup of relatedGroups; track relatedGroup.id) {
+            <a
+              [routerLink]="['/', relatedGroup.sectionSlug, relatedGroup.slug]"
+              class="group relative flex h-64 overflow-hidden rounded-2xl bg-gray-900 text-white transition duration-500 hover:-translate-y-1 sm:h-72 lg:h-80"
+              [ngClass]="theme.relatedCardClass"
+            >
+              @if (relatedGroup.coverType === 'image') {
+                <img
+                  [src]="relatedGroup.coverImage"
+                  [alt]="relatedGroup.title"
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                />
+              }
+              @if (relatedGroup.coverType === 'video') {
+                <video
+                  [src]="relatedGroup.coverImage"
+                  muted
+                  playsinline
+                  preload="none"
+                  class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                ></video>
+              }
+              <div class="absolute inset-0 bg-black/50 transition duration-300 group-hover:bg-black/35"></div>
+              <div class="relative mt-auto p-5">
+                <p class="text-xs text-gray-300">{{ relatedGroup.year || relatedGroup.sectionSlug }}</p>
+                <h3 class="mt-2 text-xl font-medium">{{ relatedGroup.title }}</h3>
+              </div>
+            </a>
+          }
         </div>
       </section>
+      }
 
-      <app-media-lightbox
-        *ngIf="isLightboxOpen"
-        [items]="group.items"
-        [selectedIndex]="selectedIndex"
-        (selectedIndexChange)="selectedIndex = $event"
-        (close)="closeLightbox()"
-      ></app-media-lightbox>
+      @if (isLightboxOpen) {
+        <app-media-lightbox
+          [items]="group.items"
+          [selectedIndex]="selectedIndex"
+          (selectedIndexChange)="selectedIndex = $event"
+          (close)="closeLightbox()"
+        ></app-media-lightbox>
+      }
     </div>
-  </ng-container>
-
-  <ng-template #missingGroup>
+  } @else {
     <div class="mx-auto max-w-xl rounded-2xl border bg-white/80 p-8 text-center shadow-sm" [ngClass]="theme.borderClass">
       <h1 class="text-2xl font-medium" [ngClass]="theme.headingClass">Galería no encontrada</h1>
       <p class="mt-3" [ngClass]="theme.descriptionClass">Este grupo no existe o todavía no tiene contenido.</p>
@@ -95,5 +105,5 @@
         Volver a {{ sectionTitle }}
       </a>
     </div>
-  </ng-template>
+  }
 </section>

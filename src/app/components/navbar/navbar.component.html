@@ -3,7 +3,8 @@
     <a routerLink="/" class="text-lg font-medium text-gray-900">juan cestac</a>
 
     <ul class="flex flex-wrap gap-2 text-xs font-bold uppercase tracking-wide text-gray-700">
-      <li *ngFor="let link of links">
+      @for (link of links; track link.path) {
+      <li>
         <a
           [routerLink]="link.path"
           routerLinkActive="bg-gray-900 text-white"
@@ -13,6 +14,7 @@
           {{ link.label }}
         </a>
       </li>
+      }
     </ul>
   </nav>
 </header>
