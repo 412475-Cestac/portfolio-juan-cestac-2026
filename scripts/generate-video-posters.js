@@ -27,9 +27,16 @@ function getOptimizedVideoSrc(src) {
 
 function getVideoItems() {
   const source = fs.readFileSync(PHOTOS_FILE, 'utf8');
-  const matches = source.matchAll(/createMediaItem\(\{ id: '([^']+)'[\s\S]*?src: '([^']+\.mp4)'/g);
+  const matches = source.matchAll(/createMediaItem\(\{([^}]+)\}\)/g);
 
-  return Array.from(matches, ([, id, src]) => ({ id, src: getOptimizedVideoSrc(src) }));
+  return Array.from(matches)
+    .map(([, body]) => {
+      const id = body.match(/id: '([^']+)'/)?.[1];
+      const src = body.match(/src: '([^']+\.mp4)'/)?.[1];
+
+      return id && src ? { id, src: getOptimizedVideoSrc(src) } : undefined;
+    })
+    .filter(Boolean);
 }
 
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });

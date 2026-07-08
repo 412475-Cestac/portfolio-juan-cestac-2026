@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { ReactiveFormsModule, Validators, NonNullableFormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CONTACT_EMAIL, IS_CONTACT_FORM_CONFIGURED } from '../../config/contact-form.config';
 import { ContactService } from '../../services/contact.service';
 
@@ -9,9 +10,12 @@ import { ContactService } from '../../services/contact.service';
   imports: [ReactiveFormsModule],
   templateUrl: './contact-page.component.html'
 })
-export class ContactPageComponent {
+export class ContactPageComponent implements AfterViewInit {
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly contactService = inject(ContactService);
+  private readonly route = inject(ActivatedRoute);
+
+  @ViewChild('nameInput') private readonly nameInput?: ElementRef<HTMLInputElement>;
 
   readonly contactEmail = CONTACT_EMAIL;
   readonly isContactFormConfigured = IS_CONTACT_FORM_CONFIGURED;
@@ -27,6 +31,16 @@ export class ContactPageComponent {
     projectType: ['', Validators.required],
     message: ['', [Validators.required, Validators.minLength(10)]]
   });
+
+  ngAfterViewInit(): void {
+    if (this.route.snapshot.fragment !== 'contact-form') {
+      return;
+    }
+
+    setTimeout(() => {
+      this.nameInput?.nativeElement.focus();
+    });
+  }
 
   submitForm(): void {
     this.successMessage = '';
