@@ -142,6 +142,29 @@ const GROUP_CONFIG: Record<string, GroupConfig> = {
   }
 };
 
+const OPTIMIZED_COVER_OVERRIDES: Record<string, string> = {
+  'events/papagayo': 'assets/media/Portadas/events/EVENTS/PAPAGAYO/DSC04727.webp',
+  'events/meed-x-session': 'assets/media/Portadas/events/EVENTS/SESSION X MEED/DSC05311.webp',
+
+  'brands/paprika': 'assets/media/Portadas/brands/BRANDS/PAPRIKA/DSC01199.webp',
+  'brands/mas-indumentaria': 'assets/media/Portadas/brands/BRANDS/MAS/DSC01707.webp',
+  'brands/di-coccia': 'assets/media/Portadas/brands/BRANDS/DI COCCIA/DSC05923.webp',
+  'brands/mante': 'assets/media/Portadas/brands/BRANDS/MANTE/PORTADA MANTE.webp',
+  'brands/victory': 'assets/media/Portadas/brands/BRANDS/VICTORY/PORTADA VICTORY.webp',
+
+  'shows-night/ysy-a': 'assets/media/Portadas/shows/SHOWS/YSY A/DSC04824-2.webp',
+  'shows-night/amelie-lens': 'assets/media/Portadas/shows/SHOWS/AMELIE/AMELIE PORTADAÇ.webp',
+  'shows-night/argy': 'assets/media/Portadas/shows/SHOWS/ARGY/ARGY PORTADA.webp',
+  'shows-night/konstantin-sibold-adam-sellouk': 'assets/media/Portadas/shows/SHOWS/KONSTANTIN/PORTADA KONSTANTIN.webp',
+  'shows-night/mau-p': 'assets/media/Portadas/shows/SHOWS/MAU P/MAU P.webp',
+  'shows-night/pawsa': 'assets/media/Portadas/shows/SHOWS/PAWSA/PORTADA PAWSA.webp',
+  'shows-night/rufus-du-sol': 'assets/media/Portadas/shows/SHOWS/RUFUS DU SOL/PORTADA RUFUS.webp',
+  'shows-night/tobi-amuchastegui-boat-party': 'assets/media/Portadas/shows/SHOWS/TOBI AMUCHASTEGUI/DSC05233.webp'
+};
+
+const getOptimizedCoverOverride = (sectionSlug: string, title: string): string | undefined =>
+  OPTIMIZED_COVER_OVERRIDES[`${sectionSlug}/${slugify(title)}`];
+
 export const MEDIA_ITEMS: MediaItem[] = [
   createMediaItem({ id: 'events-papagayo-01', title: 'Papagayo 01', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04831.jpg' }),
   createMediaItem({ id: 'events-papagayo-02', title: 'Papagayo 02', category: 'events', subcategory: 'Papagayo', src: 'assets/images/events/EVENTS/papagayo/FOTOS/DSC04817.jpg' }),
@@ -327,10 +350,11 @@ export const getMediaGroupsByCategory = (category: string): MediaGroup[] => {
 
   const mediaGroups = Array.from(groups.entries()).map(([title, items]) => {
     const config = GROUP_CONFIG[groupKey(category, title)];
+    const optimizedCover = getOptimizedCoverOverride(category, title);
     const imageCover = items.find((item) => item.type === 'image');
     const fallbackCover = imageCover ?? items[0];
-    const coverSrc = config?.coverImage ?? imageCover?.src ?? fallbackCover.src;
-    const coverType: MediaType = config?.coverType ?? (config?.coverImage ? 'image' : (imageCover?.type ?? fallbackCover.type));
+    const coverSrc = optimizedCover ?? config?.coverImage ?? imageCover?.src ?? fallbackCover.src;
+    const coverType: MediaType = optimizedCover ? 'image' : (config?.coverType ?? (config?.coverImage ? 'image' : (imageCover?.type ?? fallbackCover.type)));
 
     return {
       title: config?.title ?? title,

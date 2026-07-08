@@ -10,7 +10,9 @@
     </header>
 
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12">
-      <app-group-card *ngFor="let group of groups" [group]="group"></app-group-card>
+      @for (group of groups; track group.id) {
+        <app-group-card [group]="group"></app-group-card>
+      }
     </div>
   </div>
 </section>

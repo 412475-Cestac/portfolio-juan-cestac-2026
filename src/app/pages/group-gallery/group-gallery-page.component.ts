@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { getMediaGroupBySlug, getRecommendedGroups } from '../../data/photos';
@@ -75,7 +75,7 @@ const SECTION_THEMES: Record<string, {
 @Component({
   selector: 'app-group-gallery-page',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, RouterLink, PhotoGridComponent, MediaLightboxComponent],
+  imports: [NgClass, RouterLink, PhotoGridComponent, MediaLightboxComponent],
   templateUrl: './group-gallery-page.component.html'
 })
 export class GroupGalleryPageComponent {

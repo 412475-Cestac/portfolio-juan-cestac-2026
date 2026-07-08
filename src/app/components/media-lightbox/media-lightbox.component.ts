@@ -1,11 +1,10 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { MediaItem } from '../../models/media.model';
 
 @Component({
   selector: 'app-media-lightbox',
   standalone: true,
-  imports: [NgIf],
+  imports: [],
   templateUrl: './media-lightbox.component.html'
 })
 export class MediaLightboxComponent {

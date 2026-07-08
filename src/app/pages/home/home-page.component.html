@@ -1,22 +1,20 @@
 <section class="relative min-h-screen overflow-hidden bg-black text-white">
   <img
-    [src]="activePosterUrl"
+    [src]="activeBackgroundImageUrl"
     alt=""
-    class="absolute inset-0 h-full w-full object-cover"
+    class="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
     aria-hidden="true"
   />
-  <video
-    #heroVideo
-    class="absolute inset-0 h-full w-full object-cover"
-    [attr.src]="shouldLoadVideo ? activeVideoUrl : null"
-    [poster]="activePosterUrl"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="metadata"
-    aria-hidden="true"
-  ></video>
+  @if (previousBackgroundImageUrl) {
+    <img
+      [src]="previousBackgroundImageUrl"
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
+      [class.opacity-0]="isFadingBackground"
+      [class.opacity-100]="!isFadingBackground"
+      aria-hidden="true"
+    />
+  }
   <div class="pointer-events-none absolute inset-0 bg-black/60"></div>
   <div class="pointer-events-none absolute inset-0 opacity-25" style="background-image: radial-gradient(circle at 20% 20%, #2f2f2f 0%, transparent 45%), radial-gradient(circle at 80% 60%, #1c1c1c 0%, transparent 40%);"></div>
 
@@ -25,16 +23,17 @@
       <p class="text-xl font-semibold sm:text-2xl">Te muestro lo que hago</p>
 
       <div class="mt-8 flex w-full max-w-sm flex-col gap-4">
-        <a
-          *ngFor="let link of quickLinks"
-          [routerLink]="link.path"
-          (mouseenter)="setActiveVideo(link)"
-          (focus)="setActiveVideo(link)"
-          (touchstart)="setActiveVideo(link)"
-          class="rounded-full bg-white px-6 py-3 text-center text-sm font-bold uppercase tracking-wide text-black transition hover:bg-stone-200 sm:text-base"
-        >
-          {{ link.label }}
-        </a>
+        @for (link of quickLinks; track link.path) {
+          <a
+            [routerLink]="link.path"
+            (mouseenter)="setActiveBackground(link)"
+            (focus)="setActiveBackground(link)"
+            (touchstart)="setActiveBackground(link)"
+            class="rounded-full bg-white px-6 py-3 text-center text-sm font-bold uppercase tracking-wide text-black transition hover:bg-stone-200 sm:text-base"
+          >
+            {{ link.label }}
+          </a>
+        }
       </div>
 
       <div class="mt-9 flex items-center gap-5">
