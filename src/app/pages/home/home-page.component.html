@@ -3,6 +3,8 @@
     [src]="activeBackgroundImageUrl"
     alt=""
     class="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
+    decoding="async"
+    fetchpriority="high"
     aria-hidden="true"
   />
   @if (previousBackgroundImageUrl) {
@@ -10,6 +12,7 @@
       [src]="previousBackgroundImageUrl"
       alt=""
       class="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
+      decoding="async"
       [class.opacity-0]="isFadingBackground"
       [class.opacity-100]="!isFadingBackground"
       aria-hidden="true"

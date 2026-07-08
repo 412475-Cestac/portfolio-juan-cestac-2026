@@ -67,13 +67,15 @@ function getOptimizedMediaSrc(src: string): string {
 
 const createMediaItem = (item: MediaInput): MediaItem => {
   const src = getOptimizedMediaSrc(item.src);
+  const type = item.type ?? getMediaType(src);
 
   return {
     ...item,
     src,
+    type,
+    poster: item.poster ?? (type === 'video' ? `assets/media/performance/video-posters/${item.id}.webp` : undefined),
     sectionSlug: item.sectionSlug ?? item.category,
-    groupSlug: item.groupSlug ?? slugify(item.subcategory ?? item.category),
-    type: item.type ?? getMediaType(src)
+    groupSlug: item.groupSlug ?? slugify(item.subcategory ?? item.category)
   };
 };
 
@@ -143,23 +145,23 @@ const GROUP_CONFIG: Record<string, GroupConfig> = {
 };
 
 const OPTIMIZED_COVER_OVERRIDES: Record<string, string> = {
-  'events/papagayo': 'assets/media/Portadas/events/EVENTS/PAPAGAYO/DSC04727.webp',
-  'events/meed-x-session': 'assets/media/Portadas/events/EVENTS/SESSION X MEED/DSC05311.webp',
+  'events/papagayo': 'assets/media/performance/covers/events-papagayo.webp',
+  'events/meed-x-session': 'assets/media/performance/covers/events-meed-x-session.webp',
 
-  'brands/paprika': 'assets/media/Portadas/brands/BRANDS/PAPRIKA/DSC01199.webp',
-  'brands/mas-indumentaria': 'assets/media/Portadas/brands/BRANDS/MAS/DSC01707.webp',
-  'brands/di-coccia': 'assets/media/Portadas/brands/BRANDS/DI COCCIA/DSC05923.webp',
-  'brands/mante': 'assets/media/Portadas/brands/BRANDS/MANTE/PORTADA MANTE.webp',
-  'brands/victory': 'assets/media/Portadas/brands/BRANDS/VICTORY/PORTADA VICTORY.webp',
+  'brands/paprika': 'assets/media/performance/covers/brands-paprika.webp',
+  'brands/mas-indumentaria': 'assets/media/performance/covers/brands-mas-indumentaria.webp',
+  'brands/di-coccia': 'assets/media/performance/covers/brands-di-coccia.webp',
+  'brands/mante': 'assets/media/performance/covers/brands-mante.webp',
+  'brands/victory': 'assets/media/performance/covers/brands-victory.webp',
 
-  'shows-night/ysy-a': 'assets/media/Portadas/shows/SHOWS/YSY A/DSC04824-2.webp',
-  'shows-night/amelie-lens': 'assets/media/Portadas/shows/SHOWS/AMELIE/AMELIE PORTADAÇ.webp',
-  'shows-night/argy': 'assets/media/Portadas/shows/SHOWS/ARGY/ARGY PORTADA.webp',
-  'shows-night/konstantin-sibold-adam-sellouk': 'assets/media/Portadas/shows/SHOWS/KONSTANTIN/PORTADA KONSTANTIN.webp',
-  'shows-night/mau-p': 'assets/media/Portadas/shows/SHOWS/MAU P/MAU P.webp',
-  'shows-night/pawsa': 'assets/media/Portadas/shows/SHOWS/PAWSA/PORTADA PAWSA.webp',
-  'shows-night/rufus-du-sol': 'assets/media/Portadas/shows/SHOWS/RUFUS DU SOL/PORTADA RUFUS.webp',
-  'shows-night/tobi-amuchastegui-boat-party': 'assets/media/Portadas/shows/SHOWS/TOBI AMUCHASTEGUI/DSC05233.webp'
+  'shows-night/ysy-a': 'assets/media/performance/covers/shows-ysy-a.webp',
+  'shows-night/amelie-lens': 'assets/media/performance/covers/shows-amelie-lens.webp',
+  'shows-night/argy': 'assets/media/performance/covers/shows-argy.webp',
+  'shows-night/konstantin-sibold-adam-sellouk': 'assets/media/performance/covers/shows-konstantin.webp',
+  'shows-night/mau-p': 'assets/media/performance/covers/shows-mau-p.webp',
+  'shows-night/pawsa': 'assets/media/performance/covers/shows-pawsa.webp',
+  'shows-night/rufus-du-sol': 'assets/media/performance/covers/shows-rufus-du-sol.webp',
+  'shows-night/tobi-amuchastegui-boat-party': 'assets/media/performance/covers/shows-tobi-amuchastegui.webp'
 };
 
 const getOptimizedCoverOverride = (sectionSlug: string, title: string): string | undefined =>

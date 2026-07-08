@@ -13,6 +13,8 @@
     <img
       [src]="item.src"
       [alt]="item.title"
+      loading="lazy"
+      decoding="async"
       class="w-full transition duration-500 group-hover:scale-[1.01]"
       [class.h-auto]="editorial"
       [class.object-contain]="editorial"
@@ -23,20 +25,30 @@
     />
   }
   @if (item.type === 'video') {
-    <video
-      [src]="item.src"
-      controls
-      muted
-      playsinline
-      preload="metadata"
-      class="w-full bg-black"
+    <div
+      class="relative overflow-hidden bg-black"
       [class.h-auto]="editorial"
-      [class.object-contain]="editorial"
-      [class.object-cover]="!editorial"
       [class.h-72]="!large && !editorial"
       [class.sm:h-80]="!large && !editorial"
       [class.h-[30rem]]="large && !editorial"
-    ></video>
+    >
+      <img
+        [src]="item.poster"
+        [alt]="item.title"
+        loading="lazy"
+        decoding="async"
+        class="w-full transition duration-500 group-hover:scale-[1.01]"
+        [class.h-auto]="editorial"
+        [class.h-full]="!editorial"
+        [class.object-contain]="editorial"
+        [class.object-cover]="!editorial"
+      />
+      <div class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/15 transition-colors duration-300 group-hover:bg-black/30">
+        <span class="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-lg text-black shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
+          ▶
+        </span>
+      </div>
+    </div>
   }
   @if (!editorial) {
   <div class="p-3" [class.bg-gray-950]="dark" [class.bg-white]="!dark">

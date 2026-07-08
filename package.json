@@ -10,6 +10,7 @@
     "optimize-images": "node scripts/optimize-images.js",
     "optimize-videos": "node scripts/optimize-videos.js",
     "generate-video-covers": "node scripts/generate-video-covers.js",
+    "generate-video-posters": "node scripts/generate-video-posters.js",
     "optimize-media": "npm run optimize-images && npm run optimize-videos"
   },
   "private": true,

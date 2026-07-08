@@ -63,6 +63,8 @@
                 <img
                   [src]="relatedGroup.coverImage"
                   [alt]="relatedGroup.title"
+                  loading="lazy"
+                  decoding="async"
                   class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 />
               }
@@ -71,7 +73,7 @@
                   [src]="relatedGroup.coverImage"
                   muted
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 ></video>
               }

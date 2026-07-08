@@ -14,7 +14,7 @@ type HomeLink = {
   templateUrl: './home-page.component.html'
 })
 export class HomePageComponent {
-  activeBackgroundImageUrl = 'assets/media/Portadas/shows/SHOWS/YSY A/DSC04824-2.webp';
+  activeBackgroundImageUrl = 'assets/media/performance/home/shows-night.webp';
   previousBackgroundImageUrl = '';
   isFadingBackground = false;
   private fadeTimeout?: ReturnType<typeof setTimeout>;
@@ -23,27 +23,27 @@ export class HomePageComponent {
     {
       label: 'Shows & Night',
       path: '/shows-night',
-      backgroundImageUrl: 'assets/media/Portadas/shows/SHOWS/YSY A/DSC04824-2.webp'
+      backgroundImageUrl: 'assets/media/performance/home/shows-night.webp'
     },
     {
       label: 'Events',
       path: '/events',
-      backgroundImageUrl: 'assets/media/Portadas/events/EVENTS/PAPAGAYO/DSC04727.webp'
+      backgroundImageUrl: 'assets/media/performance/home/events.webp'
     },
     {
       label: 'Brands',
       path: '/brands',
-      backgroundImageUrl: 'assets/media/Portadas/brands/BRANDS/VICTORY/PORTADA VICTORY.webp'
+      backgroundImageUrl: 'assets/media/performance/home/brands.webp'
     },
     {
       label: 'Architecture & Interiors',
       path: '/architecture-interiors',
-      backgroundImageUrl: 'assets/media/architecture-interiors/ARCHITECTURE . INTERIORS/DSC08890.webp'
+      backgroundImageUrl: 'assets/media/performance/home/architecture-interiors.webp'
     },
     {
       label: 'Contact',
       path: '/contact',
-      backgroundImageUrl: 'assets/media/contact/contact.webp'
+      backgroundImageUrl: 'assets/media/performance/home/contact.webp'
     }
   ];
 
